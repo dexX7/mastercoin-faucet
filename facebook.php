@@ -65,7 +65,8 @@
       
     <form class="navbar-form navbar-left" role="form" action="/claim" method="post">
       <div class="form-group">
-        <input name="address" type="text" class="form-control" placeholder="Your address" style="width: 400px;" autofocus required>          
+        <input name="address" type="text" class="form-control" placeholder="Your address" style="width: 400px;" 
+		autofocus required>          
       </div>
       <input name="formid" type="hidden" value="<?php echo $formid; ?>">
       <button type="submit" class="btn btn-success">Submit</button>
@@ -83,10 +84,13 @@
     <p>It looks like you already have claimed your reward on <strong><?php echo $txtimestamp; ?></strong>.</p>
     <p>You can lookup the transaction and all further details on:</p>
     <ul>
-      <li><a href="http://mastercoin-explorer.com/transactions/<?php echo $txid; ?>" target="_blank"><strong>mastercoin-explorer.com</strong></a></li>
-      <li><a href="https://masterchest.info/lookuptx.aspx?txid=<?php echo $txid; ?>" target="_blank"><strong>masterchest.info</strong></a></li>
+      <li><a href="http://mastercoin-explorer.com/transactions/<?php echo $txid; ?>" target="_blank">
+	  <strong>mastercoin-explorer.com</strong></a></li>
+      <li><a href="https://masterchest.info/lookuptx.aspx?txid=<?php echo $txid; ?>" target="_blank">
+	  <strong>masterchest.info</strong></a></li>
     </ul>
-    <p>If you are certain that you never claimed this reward, please contact us via <a href="mailto:dexx@bitwatch.co"><strong>email</strong></a>.</p>
+    <p>If you are certain that you never claimed this reward, please contact us via <a href="mailto:dexx@bitwatch.co">
+	<strong>email</strong></a>.</p>
           
     <br /><br /><br />
     <p><a href="/"><strong>Go back</strong></a> to the frontpage.</p>
@@ -99,8 +103,10 @@
           
     <p>There are several reasons why you might see this.</p>
     <p>For example you declined the authorisation or you refreshed this website.</p>
-    <p>You can <a href="/facebook-intro"><strong>click here</strong></a> to start the authentication via <strong>Facebook</strong> again.</p>
-    <p>If you think there shouldn't be an error, please contact us via <a href="mailto:dexx@bitwatch.co"><strong>email</strong></a>.</p>
+    <p>You can <a href="/facebook-intro"><strong>click here</strong></a> to start the authentication via 
+	<strong>Facebook</strong> again.</p>
+    <p>If you think there shouldn't be an error, please contact us via <a href="mailto:dexx@bitwatch.co">
+	<strong>email</strong></a>.</p>
           
     <br /><br /><br />
     <p>Or <a href="/"><strong>go back</strong></a> to the frontpage.</p>

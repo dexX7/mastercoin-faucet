@@ -83,15 +83,18 @@
       <strong>Well done!</strong> Everything is fine, <?php echo $username; ?>.
     </div>
       
-    <p>You have <strong><?php echo $posts; ?> posts</strong> and <strong><?php echo $activity; ?> activity score</strong>.</p>
-    <p>The signature you entered does <strong>match</strong> and your profile was created on <strong><?php echo $registration; ?></strong>.</p>
+    <p>You have <strong><?php echo $posts; ?> posts</strong> and <strong><?php echo $activity; ?> activity score
+	</strong>.</p>
+    <p>The signature you entered does <strong>match</strong> and your profile was created on <strong><?php echo 
+	$registration; ?></strong>.</p>
     <p>And therefore you are <strong>qualified</strong> for this reward. :)</p>
     <br />
     <p>Please enter your <strong>Mastercoin address</strong> and click <strong>submit</strong> to claim your bounty:</p>
       
     <form class="navbar-form navbar-left" role="form" action="/claim" method="post">
       <div class="form-group">
-        <input name="address" type="text" class="form-control" placeholder="Your address" style="width: 400px;" autofocus required>          
+        <input name="address" type="text" class="form-control" placeholder="Your address" style="width: 400px;" 
+		autofocus required>          
       </div>
       <input name="formid" type="hidden" value="<?php echo $formid; ?>">
       <button type="submit" class="btn btn-success">Submit</button>
@@ -128,10 +131,13 @@
     <p>It looks like you already have claimed your reward on <strong><?php echo $txtimestamp; ?></strong>.</p>
     <p>You can lookup the transaction and all further details on:</p>
     <ul>
-      <li><a href="http://mastercoin-explorer.com/transactions/<?php echo $txid; ?>" target="_blank"><strong>mastercoin-explorer.com</strong></a></li>
-      <li><a href="https://masterchest.info/lookuptx.aspx?txid=<?php echo $txid; ?>" target="_blank"><strong>masterchest.info</strong></a></li>
+      <li><a href="http://mastercoin-explorer.com/transactions/<?php echo $txid; ?>" target="_blank">
+	  <strong>mastercoin-explorer.com</strong></a></li>
+      <li><a href="https://masterchest.info/lookuptx.aspx?txid=<?php echo $txid; ?>" target="_blank">
+	  <strong>masterchest.info</strong></a></li>
     </ul>
-    <p>If you are certain that you never claimed this reward, please contact us via <a href="mailto:dexx@bitwatch.co"><strong>email</strong></a>.</p>
+    <p>If you are certain that you never claimed this reward, please contact us via <a href="mailto:dexx@bitwatch.co">
+	<strong>email</strong></a>.</p>
           
     <br /><br /><br />
     <p><a href="/"><strong>Go back</strong></a> to the frontpage.</p>
@@ -144,8 +150,10 @@
           
     <p>There are several reasons why you might see this.</p>
     <p>Maybe the signature you submitted did not match or you refreshed this website.</p>
-    <p>You can <a href="/bitcointalk-intro"><strong>click here</strong></a> to start the authentication via <strong>bitcointalk.org</strong> again.</p>
-    <p>If you think there shouldn't be an error, please contact us via <a href="mailto:dexx@bitwatch.co"><strong>email</strong></a>.</p>
+    <p>You can <a href="/bitcointalk-intro"><strong>click here</strong></a> to start the authentication via 
+	<strong>bitcointalk.org</strong> again.</p>
+    <p>If you think there shouldn't be an error, please contact us via <a href="mailto:dexx@bitwatch.co">
+	<strong>email</strong></a>.</p>
           
     <br /><br /><br />
     <p>Or <a href="/"><strong>go back</strong></a> to the frontpage.</p>

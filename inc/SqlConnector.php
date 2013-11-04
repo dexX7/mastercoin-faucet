@@ -37,7 +37,8 @@
       $cleanuser = $this->link->escape_string($userhash);
       $cleanmethod = $this->link->escape_string($method);
       
-      $query = "SELECT method, user, timestamp, amount, txid FROM claims WHERE method LIKE '{$cleanmethod}' AND user LIKE '{$cleanuser}'";
+      $query = "SELECT method, user, timestamp, amount, txid FROM claims WHERE method LIKE '{$cleanmethod}' 
+                AND user LIKE '{$cleanuser}'";
       $result = $this->link->query($query);
       
       $obj = $result->fetch_object();

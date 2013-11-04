@@ -29,7 +29,8 @@
   
   <ul>
     <li><a href="/bitcointalk-intro"><strong>bitcointalk.org</strong></a><br />
-    <i>You need an activity score above 10, at least 10 posts and an account created before August 1, 2013.</i><br />&nbsp;</li>
+    <i>You need an activity score above 10, at least 10 posts and an account created before August 1, 2013.</i>
+	<br />&nbsp;</li>
     
     <li><a href="/reddit-intro"><strong>Reddit</strong></a><br />
     <i>More than 100 karma are required.</i><br />&nbsp;</li>
