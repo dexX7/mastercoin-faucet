@@ -109,7 +109,7 @@
 
   <?php } else if($result == "STATE_INVALID_SIGNATURE") { ?>
 	
-    <div class="alert alert-info">
+    <div class="alert alert-warning">
     <strong>Signature invalid.</strong> You may try again, <?php echo $username; ?>.
     </div>
 		

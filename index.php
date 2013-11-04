@@ -35,10 +35,10 @@
     <li><a href="/reddit-intro"><strong>Reddit</strong></a><br />
     <i>More than 100 karma are required.</i><br />&nbsp;</li>
     
-    <li><strong>GitHub</strong><br />
-    <i>Either at least 3 public repositories or stared one of the 
-    <a href="http://wiki.mastercoin.org/index.php/FAQ#Is_Mastercoin_open_source.3F" target="_blank">Mastercoin GitHub 
-    repositories</a> and an account created before August 1, 2013 is needed to unlock this reward.</i><br />&nbsp;</li>
+    <li><a href="/github-intro"><strong>GitHub</strong></a><br />
+    <i>You must be be stared on one of the 
+    <a href="http://wiki.mastercoin.org/index.php/FAQ#Is_Mastercoin_open_source.3F">Mastercoin GitHub repositories</a> 
+    or you need at least 3 public repositories and an account older than August 1, 2013.</i><br />&nbsp;</li>
     
     <li><a href="/google-intro"><strong>Google</strong></a><br />&nbsp;</li>
     

@@ -26,9 +26,14 @@
   
   function isFacebookCode($input)
   {
-    //$pattern = "/^4\/[a-zA-Z0-9_-]{28}\.[a-zA-Z0-9]{31}$/";
-    //return preg_match($pattern, $input);
-    return true;
+    $pattern = "/^[a-zA-Z0-9_-]{323}$/";
+    return preg_match($pattern, $input);
+  }
+  
+  function isGitHubCode($input)
+  {
+    $pattern = "/^[a-zA-Z0-9]{20}$/";
+    return preg_match($pattern, $input);
   }
   
   function registerReferrer($referrer)
@@ -120,6 +125,14 @@
       
     return $isValid;
   }
+
+  function hasValidGitHubCode()
+  {
+    $isValid =
+      isset($_GET["code"]) && isGitHubCode($_GET["code"]);
+      
+    return $isValid;
+  }
   
   function hasValidBitcointalkData()
   {
@@ -143,6 +156,9 @@
           
         case "facebook":
           return hasValidFacebookCode();
+		  
+        case "github":
+          return hasValidGitHubCode();
       }
     }
     

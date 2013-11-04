@@ -89,7 +89,31 @@ class GitHubConnector
     }
     
     return $response["result"];
-  }  
+  }
+  
+  public function getRepos()
+  {
+    if($this->isAuthenticated() == false)
+    {
+      return false;
+    }
+    
+    try
+    {
+      $response = $this->client->fetch("https://api.github.com/user/repos");
+    }
+    catch (Exception $e)
+    {
+      return false;
+    }
+    
+    if($response["code"] != 200)
+    {
+      return false;
+    }
+    
+    return $response["result"];
+  }
   
   public function isAuthenticated()
   {

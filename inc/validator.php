@@ -33,4 +33,33 @@
     
     return $karma > 100;
   }
+  
+  function isQualifiedGitHub($user, $repos)
+  {
+    if(!$user["public_repos"] || !$user["created_at"])
+    {
+      return false;
+    }
+    
+    $date_cutoff = strtotime("2013-08-01 00:00:00");
+    
+    $specials = array("pymastercoin", "mastercoin-ruby", "mastercoin-explorer",
+                      "mastercoin-wallet", "mastercoin-tools", "masterchest-library",
+                      "masterchest-wallet", "masterchest-engine", "masterchest.info",
+                      "BMX-2", "MasterCoin-Adviser");
+	
+    foreach($repos as $repo)
+    {
+      if(in_array($repo["name"], $specials))
+	  {
+	    return true;
+	  }
+    }
+    
+    $morethantwo = intval($user["public_repos"]) > 2;
+    
+    $oldenough = strtotime($user["created_at"]) < $date_cutoff;
+    
+    return $morethantwo && $oldenough;	
+  }
 ?>

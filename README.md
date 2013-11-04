@@ -6,7 +6,7 @@ tiny amounts of Mastercoin, primarily to play around a little.
 Project status
 =================
 This is a first test. The actual payout module is not yet
-created. 4/5 authentication methods are implemented. The
+created. 5/5 authentication methods are implemented. The
 code is not complete nor optimized.
 
 Used compontents

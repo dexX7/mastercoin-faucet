@@ -1,15 +1,19 @@
 <?php
 $redditClientId = "";
 $redditClientSecret = "";
-$redditRedirectUrl = "http://faucet.bitwatch.co/reddit";
+$redditRedirectUrl = "";
 
 $googleClientId = "";
 $googleClientSecret = "";
-$googleRedirectUrl = "http://faucet.bitwatch.co/google";
+$googleRedirectUrl = "";
 
 $facebookClientId = "";
 $facebookClientSecret = "";
-$facebookRedirectUrl = "http://faucet.bitwatch.co/facebook";
+$facebookRedirectUrl = "";
+
+$gitClientId = "";
+$gitClientSecret = "";
+$gitRedirectUrl = "";
 
 $sqlHost = "";
 $sqlUsername = "";
