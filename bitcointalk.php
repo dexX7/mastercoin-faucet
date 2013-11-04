@@ -16,7 +16,7 @@
   unregisterReferrer();
   unregisterUid();
       
-  // Results: valid, notqualified, alreadyclaimed, error
+  // Results: valid, invalidsignature, notqualified, alreadyclaimed, error
   $result = "STATE_ERROR";
 
   if($valid)
@@ -43,10 +43,14 @@
       }
       catch (Exception $e)
       {
-        // echo $e;
+        $validsignature = false;
       }
-      
-      if($validsignature && isQualifiedBitcointalk($user))
+			
+      if($validsignature == false)
+      {
+        $result = "STATE_INVALID_SIGNATURE";
+      }
+      else if(isQualifiedBitcointalk($user))
       {
         $sql = new SqlConnector($sqlHost, $sqlUsername, $sqlPassword, $sqlDatabase);            
         $reward = $sql->lookupReward($identifier, "bitcointalk");
@@ -102,7 +106,23 @@
 
     <br /><br /><br /><br /><br />
     <p>Or <a href="/"><strong>go back</strong></a> to the frontpage.</p>
-    
+
+  <?php } else if($result == "STATE_INVALID_SIGNATURE") { ?>
+	
+    <div class="alert alert-info">
+    <strong>Signature invalid.</strong> You may try again, <?php echo $username; ?>.
+    </div>
+		
+    <p>It looks like your signature is invalid.</p>
+		
+    <p>You need to enter a valid Bitcoin address in your profile and submit a signature
+    for the message <strong>Mastercoin faucet</strong>.
+		
+    <p>Please <a href="/bitcointalk-intro"><strong>try again</strong></a></p>.
+			
+    <br /><br /><br />
+    <p><a href="/"><strong>Go back</strong></a> to the frontpage.</p>
+		
   <?php } else if($result == "STATE_NOT_QUALIFIED") { ?>
   
     <div class="alert alert-info">
