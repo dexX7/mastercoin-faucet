@@ -1,0 +1,12 @@
+RewriteEngine On
+RewriteRule		^facebook-intro			facebook-intro.php		[NC,L]
+RewriteRule		^reddit-intro			reddit-intro.php		[NC,L]
+RewriteRule		^google-intro			google-intro.php		[NC,L]
+RewriteRule		^github-intro			github-intro.php		[NC,L]
+RewriteRule		^bitcointalk-intro		bitcointalk-intro.php	[NC,L]
+RewriteRule		^facebook				facebook.php			[NC,L]
+RewriteRule		^reddit					reddit.php				[NC,L]
+RewriteRule		^google					google.php				[NC,L]
+RewriteRule		^github					github.php				[NC,L]
+RewriteRule		^bitcointalk			bitcointalk.php			[NC,L]
+RewriteRule		^claim					claim.php				[NC,L]
