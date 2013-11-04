@@ -180,11 +180,11 @@ class Client
     {
         return $this->client_secret;
     }
-	
+  
     public function getAuthenticationArray($auth_endpoint, $redirect_uri, array $extra_parameters = array())
     {
         $parameters = array_merge(array(
-			'endpoint'		=> $auth_endpoint,
+      'endpoint'    => $auth_endpoint,
             'response_type' => 'code',
             'client_id'     => $this->client_id,
             'redirect_uri'  => $redirect_uri
@@ -249,7 +249,7 @@ class Client
                 throw new Exception('Unknown client auth type.', Exception::INVALID_CLIENT_AUTHENTICATION_TYPE);
                 break;
         }
-		
+    
         return $this->executeRequest($token_endpoint, $parameters, self::HTTP_METHOD_POST, $http_headers, self::HTTP_FORM_CONTENT_TYPE_APPLICATION);
     }
 
@@ -414,7 +414,7 @@ class Client
                 $curl_options[CURLOPT_POST] = true;
                 /* No break */
             case self::HTTP_METHOD_PUT:
-			case self::HTTP_METHOD_PATCH:
+      case self::HTTP_METHOD_PATCH:
 
                 /**
                  * Passing an array to CURLOPT_POSTFIELDS will encode the data as multipart/form-data,

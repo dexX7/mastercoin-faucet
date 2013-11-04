@@ -1,8 +1,8 @@
 <?php
 
-	function getMastercoinTotal()
-	{
-		return "over 9000";
-	}
+  function getMastercoinTotal()
+  {
+    return "over 9000";
+  }
 
 ?>

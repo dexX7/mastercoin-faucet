@@ -1094,8 +1094,8 @@ class TestSuite {
             echo "<br />ECDH key agreement ERROR. One of the keys is null.";
             flush();
         }else{
-        	echo "<br />ECDH key agreement ERROR.";
-        	flush();
+          echo "<br />ECDH key agreement ERROR.";
+          flush();
         }
 
         $end_time = microtime(true);
