@@ -2,6 +2,11 @@
       
 <!-- Payout -->
 
+  <p>THE TEST ENDS HERE! :)</p>
+  
+  <p>MORE TO COME.</p>
+  
+<!--
   <p>Retrieve request via form id</p>
   
   <p>Check, if legit request</p>
@@ -13,7 +18,8 @@
   <p>Create raw tx and broadcast via blockchain.info (...)</p>
   
   <p>Store entry in DB</p>
-  
+-->
+
 <!-- /Payout -->
       
 <?php include("footer.php"); ?>

@@ -1,79 +1,22 @@
-<?php include("header.php"); ?>
+<?php
+  include("header.php");
+  include("inc/state_github.php");
+?>
       
 <!-- GitHub callback -->
 
-<?php
-  require_once("inc/config.php");
-  require_once("inc/security.php");  
-  require_once("inc/validator.php");
-  require_once("inc/GitHubConnector.php");
-  require_once("inc/SqlConnector.php");
-        
-  $valid = isValidRequest("github");
-        
-  // Cleanup session
-  unregisterReferrer();
-  unregisterUid();
-      
-  // Results: valid, notqualified, alreadyclaimed, error
-  $result = "STATE_ERROR";
-  
-  if($valid)
-  {
-    $connector = new GitHubConnector($gitClientId, $gitClientSecret, $gitRedirectUrl);
-    $connector->authenticate($_GET["code"]);
-    $user = $connector->getUserDetails();
-    $repos = $connector->getRepos();
-	
-    if($user)
-    {
-      $username = $user["login"];
-      $identifier = $user["id"];
-      $linkkarma = $user["link_karma"];
-      
-      if(isQualifiedGitHub($user, $repos))
-      {
-        $sql = new SqlConnector($sqlHost, $sqlUsername, $sqlPassword, $sqlDatabase);            
-        $reward = $sql->lookupReward($identifier, "github");
-                              
-        if($reward)
-        {
-          $result = "STATE_ALREADY_CLAIMED";
-          
-          $txtimestamp = date("F j, Y", strtotime($reward->timestamp));
-          $txid = $reward->txid;
-        }
-        else if($sql->wasSuccess())
-        {
-          $formid = generateUid();
-          $reserved = $sql->registerFormId($formid, $identifier, "github");
-
-          if($reserved)
-          {
-            $result = "STATE_VALID";
-          }
-        }
-      }
-      else
-      {
-        $result = "STATE_NOT_QUALIFIED";
-      }
-    }
-  }
-      
-  if($result == "STATE_VALID")
-  { ?>
+  <?php if($result == "STATE_VALID") { ?>
   
     <div class="alert alert-success">
       <strong>Well done!</strong> Welcome back from <strong>GitHub</strong>, <?php echo $username; ?>.
     </div>
     
     <span class="description">
-      <p>...</p>      
-      <p>And therefore you are <strong>qualified</strong> for this reward. :)</p>
-      <br />
-      <p>Please enter your <strong>Mastercoin address</strong> and click <strong>submit</strong> to claim your bounty:</p>
+      <p>You are <strong>qualified</strong> for this reward. :)</p>
     </span>
+	
+	<br />
+    <p>Please enter your <strong>Mastercoin address</strong> and click <strong>submit</strong> to claim your bounty:</p>
     
     <form class="navbar-form navbar-left" role="form" action="/claim" method="post">
       <div class="form-group">
@@ -94,7 +37,9 @@
     </div>
     
     <span class="description">
-      <p>Not qualified... :(</p>
+      <p>You must be stared on one of the <a href="http://wiki.mastercoin.org/index.php/FAQ#Is_Mastercoin_open_source.3F">
+      <strong>Mastercoin GitHub repositories</strong></a> or you need at least <strong>3 public repositories</strong> and 
+      an account older than <strong>August 1, 2013</strong>.</p>
       <p>The requirement serves as protection against abuse, so we are able to give out as much free MCS as 
       possible.</p>
       <p>Please understand our position and we hope you <strong>come back</strong> later when you gained enough.</p>
@@ -132,9 +77,10 @@
       <strong>Oh noes!</strong> There seems to be a problem.. :(
     </div>
     
-    <span class="description">  
+    <span class="description">
       <p>There are several reasons why you might see this.</p>
-      <p>For example you declined the authorisation or you refreshed this website.</p>
+      <p>For example you declined the authorisation or your session is no longer valid, because you refreshed 
+      this website.</p>
       <p>You can <a href="/github-intro"><strong>click here</strong></a> to start the authentication via 
 	  <strong>GitHub</strong> again.</p>
       <p>If you think there shouldn't be an error, please contact us via <a href="mailto:dexx@bitwatch.co">
@@ -144,9 +90,7 @@
     <br /><br /><br />
     <p>Or <a href="/"><strong>go back</strong></a> to the frontpage.</p>
 
-<?php
-  }
-?>
+  <?php } ?>
 
 <!-- /GitHub callback -->
       

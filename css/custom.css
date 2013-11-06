@@ -51,3 +51,17 @@ code {
 .description {
   line-height: 2;
 }
+
+.thumbnail {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding: 4px 19px;
+}
+
+.preview {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}

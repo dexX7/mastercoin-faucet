@@ -1,67 +1,11 @@
-<?php include("header.php"); ?>
-      
+<?php
+  include("header.php");
+  include("inc/state_reddit.php");
+?>
+
 <!-- Reddit callback -->
 
-<?php
-  require_once("inc/config.php");
-  require_once("inc/security.php");  
-  require_once("inc/validator.php");
-  require_once("inc/RedditConnector.php");
-  require_once("inc/SqlConnector.php");
-        
-  $valid = isValidRequest("reddit");
-        
-  // Cleanup session
-  unregisterReferrer();
-  unregisterUid();
-      
-  // Results: valid, notqualified, alreadyclaimed, error
-  $result = "STATE_ERROR";
-  
-  if($valid)
-  {
-    $connector = new RedditConnector($redditClientId, $redditClientSecret, $redditRedirectUrl);
-    $connector->authenticate($_GET["code"]);
-    $user = $connector->getUserDetails();
-        
-    if($user)
-    {
-      $username = $user["name"];
-      $commentkarma = $user["comment_karma"];
-      $linkkarma = $user["link_karma"];
-      
-      if(isQualifiedReddit($user))
-      {
-        $sql = new SqlConnector($sqlHost, $sqlUsername, $sqlPassword, $sqlDatabase);            
-        $reward = $sql->lookupReward($username, "reddit");
-                              
-        if($reward)
-        {
-          $result = "STATE_ALREADY_CLAIMED";
-          
-          $txtimestamp = date("F j, Y", strtotime($reward->timestamp));
-          $txid = $reward->txid;
-        }
-        else if($sql->wasSuccess())
-        {
-          $formid = generateUid();
-          $reserved = $sql->registerFormId($formid, $username, "reddit");
-
-          if($reserved)
-          {
-            $result = "STATE_VALID";
-          }
-        }
-      }
-      else
-      {
-        $result = "STATE_NOT_QUALIFIED";
-      }
-    }
-  }
-      
-  if($result == "STATE_VALID")
-  { ?>
+  <?php if($result == "STATE_VALID") { ?>
   
     <div class="alert alert-success">
       <strong>Well done!</strong> Welcome back from <strong>Reddit</strong>, <?php echo $username; ?>.
@@ -70,11 +14,12 @@
     <span class="description">
       <p>You have <strong><?php echo $linkkarma; ?> link karma</strong> and <strong><?php echo $commentkarma; ?> 
 	  comment karma</strong>.</p>      
-      <p>And therefore you are <strong>qualified</strong> for this reward. :)</p>
-      <br />
-      <p>Please enter your <strong>Mastercoin address</strong> and click <strong>submit</strong> to claim your bounty:</p>
+      <p>And therefore you are <strong>qualified</strong> for this reward. :)</p>      
     </span>
-    
+	
+	<br />
+    <p>Please enter your <strong>Mastercoin address</strong> and click <strong>submit</strong> to claim your bounty:</p>
+
     <form class="navbar-form navbar-left" role="form" action="/claim" method="post">
       <div class="form-group">
         <input name="address" type="text" class="form-control" placeholder="Your address" style="width: 400px;" 
@@ -112,7 +57,7 @@
       <strong>Hmm...!</strong> You already claimed this reward.
     </div>
     
-    <span class="description">  
+    <span class="description">
       <p>It looks like you already have claimed your reward on <strong><?php echo $txtimestamp; ?></strong>.</p>
       <p>You can lookup the transaction and all further details on:</p>
     </span>
@@ -135,9 +80,10 @@
       <strong>Oh noes!</strong> There seems to be a problem.. :(
     </div>
     
-    <span class="description">  
+    <span class="description">
       <p>There are several reasons why you might see this.</p>
-      <p>For example you declined the authorisation or you refreshed this website.</p>
+      <p>For example you declined the authorisation or your session is no longer valid, because you refreshed 
+      this website.</p>
       <p>You can <a href="/reddit-intro"><strong>click here</strong></a> to start the authentication via 
 	  <strong>Reddit</strong> again.</p>
       <p>If you think there shouldn't be an error, please contact us via <a href="mailto:dexx@bitwatch.co">
@@ -147,10 +93,8 @@
     <br /><br /><br />
     <p>Or <a href="/"><strong>go back</strong></a> to the frontpage.</p>
 
-<?php
-  }
-?>
+  <?php } ?>
 
 <!-- /Reddit callback -->
-      
+
 <?php include("footer.php"); ?>

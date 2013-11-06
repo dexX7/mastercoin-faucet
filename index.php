@@ -16,9 +16,8 @@
   <span class="description">
     <p>This website, Mastercoin faucet, rewards user with tiny amounts of $0.1 - $0.5 worth of Mastercoin for
     doing simple tasks.</p>
-    <p>Don't worry, this project is completely sponsored by <a href="https://bitcointalk.org" target="_blank">
-    bitcointalk.org</a> user <a href="https://bitcointalk.org/index.php?topic=321358.msg3442275#msg3442275" 
-    target="_blank">ripper234</a> and we don't want your data. All authentication steps are required to prevent 
+    <p>Don't worry, this project is completely sponsored by a <a href="https://bitcointalk.org"><strong>
+    bitcointalk.org</strong></a> user and we don't want your data. All authentication steps are required to prevent 
     abuse, because our goal is to reach as many interested people as possible.</p>
   </span>
   
@@ -28,21 +27,21 @@
   </span>
   
   <ul>
+    <li><a href="/reddit-intro"><strong>Reddit</strong></a><br />
+    <i>More than 100 karma are required.</i><br />&nbsp;</li>
+	
     <li><a href="/bitcointalk-intro"><strong>bitcointalk.org</strong></a><br />
     <i>You need an activity score above 10, at least 10 posts and an account created before August 1, 2013.</i>
 	<br />&nbsp;</li>
-    
-    <li><a href="/reddit-intro"><strong>Reddit</strong></a><br />
-    <i>More than 100 karma are required.</i><br />&nbsp;</li>
-    
+	
     <li><a href="/github-intro"><strong>GitHub</strong></a><br />
-    <i>You must be be stared on one of the 
+    <i>You must be stared on one of the 
     <a href="http://wiki.mastercoin.org/index.php/FAQ#Is_Mastercoin_open_source.3F">Mastercoin GitHub repositories</a> 
     or you need at least 3 public repositories and an account older than August 1, 2013.</i><br />&nbsp;</li>
-    
+	
     <li><a href="/google-intro"><strong>Google</strong></a><br />&nbsp;</li>
     
-    <li><a href="/facebook-intro"><strong>Facebook</strong></a></li>
+    <li><a href="/facebook-intro"><strong>Facebook</strong></a><br />&nbsp;</li>
   </ul>
 
 <!-- /Home -->

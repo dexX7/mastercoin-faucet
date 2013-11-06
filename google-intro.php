@@ -30,11 +30,14 @@
 	<strong>authentication</strong>, if you like to proceed.</p>
   </span>
   
-  <div class="thumbnail" style="margin-top: 20px;">
-    <img src="img/authgoogle.png" alt="Google authentication" width="1017" height="572" style="max-width: 93%;">
+  <div class="thumbnail">
+    <div class="row">
+      <div class="col-sm-6"><img class="preview" src="img/authgoogle.png" alt="Google authentication" ></div>
+      <div class="col-sm-6"><img class="preview" src="img/authgoogledone.png" alt="Successful authentication"></div>
+    </div>
   </div>
   
-  <p>Or <a href="/"><strong>go back</strong></a> instead.</p><br />
+  <p>Or <a href="/"><strong>go back</strong></a> instead.</p>
   
 <!-- /Google intro -->
         

@@ -26,17 +26,21 @@
     
     <p>If you go on, you will be forwarded to <strong>GitHub</strong>. There you need to grant access to an 
 	application called <strong>Mastercoin faucet</strong>. You will be redirected to this page, after you finished 
-	the process.</p>
+	the process. You can revoke the access later <a href="https://github.com/settings/applications" target="_blank">
+	<strong>here</strong></a>.</p>
     
     <p>Please <a href="<?php echo $url; ?>"><strong>click here</strong></a> to initiate the 
 	<strong>authentication</strong>, if you like to proceed.</p>
   </span>
   
-  <div class="thumbnail" style="margin-top: 20px;">
-    <img src="img/authgithub.png" alt="GitHub authentication" width="1017" height="572" style="max-width: 93%;">
+  <div class="thumbnail">
+    <div class="row">
+      <div class="col-sm-6"><img class="preview" src="img/authgithub.png" alt="GitHub authentication" ></div>
+      <div class="col-sm-6"><img class="preview" src="img/authgithubdone.png" alt="Successful authentication"></div>
+    </div>
   </div>
   
-  <p>Or <a href="/"><strong>go back</strong></a> instead.</p><br />
+  <p>Or <a href="/"><strong>go back</strong></a> instead.</p>
   
 <!-- /GitHub intro -->
         

@@ -16,7 +16,7 @@ class GitHubConnector
   private $client = null;
   private $authenticated = false;  
   
-  // Constructor
+  // Initializes OAuth2 client
   public function __construct($id, $secret, $redirect)
   {
     $this->clientId = $id;
@@ -25,7 +25,8 @@ class GitHubConnector
     
     $this->client = new OAuth2\Client($this->clientId, $this->clientSecret, OAuth2\Client::AUTH_TYPE_FORM);
   }
-  
+
+  // Creates OAuth authentication URL
   public function getAuthUrl($state = "", $scope = "")
   {
     $params = array("scope" => $scope, "state" => $state);
@@ -33,6 +34,7 @@ class GitHubConnector
     return $this->client->getAuthenticationUrl($this->authorizeUrl, $this->redirectUrl, $params);
   }
   
+  // Establishes OAuth connection, returns false, if failed
   public function authenticate($code)
   {
     $params = array("code" => $code, "redirect_uri" => $this->redirectUrl);
@@ -66,7 +68,8 @@ class GitHubConnector
     
     return $client;
   }
-  
+
+  // Returns user object or false, if failed
   public function getUserDetails()
   {
     if($this->isAuthenticated() == false)
@@ -91,6 +94,7 @@ class GitHubConnector
     return $response["result"];
   }
   
+  // Returns repositories object or false, if failed
   public function getRepos()
   {
     if($this->isAuthenticated() == false)
@@ -114,7 +118,8 @@ class GitHubConnector
     
     return $response["result"];
   }
-  
+
+  // Returns true, if OAuth connection is established
   public function isAuthenticated()
   {
     return $this->authenticated;

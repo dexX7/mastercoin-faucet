@@ -2,6 +2,7 @@
 
 class BitcoinTalkConnector
 {
+  // Returns user object or false, if failed
   public function getUserDetails($link)
   {
     $uid = $this->extractUid($link);
@@ -29,12 +30,14 @@ class BitcoinTalkConnector
     
     return $user;
   }
-      
+  
+  // Creates wap profile URL
   private function buildUrl($uid)
   {
     return "https://bitcointalk.org/index.php?action=profile;u=".$uid.";wap";
   }
-  
+
+  // Extracts user id or returns false, if failed
   private function extractUid($link)
   {  
     $patternUid = "/([0-9]+)/";
@@ -42,6 +45,7 @@ class BitcoinTalkConnector
     return $matchUid[1];
   }
   
+  // Extracts username or returns false, if failed
   private function extractName($html)
   {
     $patternName = "/Name.*?<td>(.*?)<\/td>/isu";
@@ -49,6 +53,7 @@ class BitcoinTalkConnector
     return $matchName[1];
   }
   
+  // Extracts post count or returns false, if failed
   private function extractPosts($html)
   {
     $patternPosts = "/Posts.*?<td>(.*?)<\/td>/isu";
@@ -56,6 +61,7 @@ class BitcoinTalkConnector
     return intval($matchPosts[1]);
   }
   
+  // Extracts activity score or returns false, if failed
   private function extractActivity($html)
   {
     $patternActivity = "/Activity.*?<td>(.*?)<\/td>/isu";
@@ -63,6 +69,7 @@ class BitcoinTalkConnector
     return intval($matchActivity[1]);
   }
   
+  // Extracts Bitcoin address or returns false, if failed
   private function extractAddress($html)
   {
     $patternAddress = "/Bitcoin address.*?<td>(.*?)<\/td>/isu";
@@ -70,6 +77,7 @@ class BitcoinTalkConnector
     return $matchAddress[1];
   }
   
+  // Extracts registration date as unix timestamp or returns false, if failed
   private function extractRegistration($html)
   {
     $patternRegistration = "/Date.*?<td>(.*?)<\/td>/isu";

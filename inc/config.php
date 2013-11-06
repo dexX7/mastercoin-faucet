@@ -1,4 +1,5 @@
 <?php
+
 $redditClientId = "";
 $redditClientSecret = "";
 $redditRedirectUrl = "";
@@ -19,4 +20,5 @@ $sqlHost = "";
 $sqlUsername = "";
 $sqlPassword = "";
 $sqlDatabase = "";
+
 ?>

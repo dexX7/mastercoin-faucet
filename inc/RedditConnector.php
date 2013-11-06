@@ -16,7 +16,7 @@ class RedditConnector
   private $client = null;
   private $authenticated = false;  
   
-  // Constructor
+  // Initializes OAuth2 client
   public function __construct($id, $secret, $redirect)
   {
     $this->clientId = $id;
@@ -26,6 +26,7 @@ class RedditConnector
     $this->client = new OAuth2\Client($this->clientId, $this->clientSecret, OAuth2\Client::AUTH_TYPE_AUTHORIZATION_BASIC);
   }
   
+  // Creates OAuth authentication URL
   public function getAuthUrl($state = "", $scope = "identity")
   {
     $params = array("scope" => $scope, "state" => $state);
@@ -33,6 +34,7 @@ class RedditConnector
     return $this->client->getAuthenticationUrl($this->authorizeUrl, $this->redirectUrl, $params);
   }
   
+  // Establishes OAuth connection, returns false, if failed
   public function authenticate($code)
   {
     $params = array("code" => $code, "redirect_uri" => $this->redirectUrl);
@@ -66,6 +68,7 @@ class RedditConnector
     return $client;
   }
   
+  // Returns user object or false, if failed
   public function getUserDetails()
   {
     if($this->isAuthenticated() == false)
@@ -88,8 +91,9 @@ class RedditConnector
     }
     
     return $response["result"];
-  }  
+  }
   
+  // Returns true, if OAuth connection is established
   public function isAuthenticated()
   {
     return $this->authenticated;

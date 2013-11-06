@@ -66,7 +66,7 @@ require_once("inc/balance.php");
     <!-- Begin page content -->
     <div class="container">
       <div class="page-header">
-        <h1>The Mastercoin faucet</h1>
+        <h1>The Mastercoin faucet (test stage, no payout yet)</h1>
         <p class="lead">Earn up to $0.5 worth of free Mastercoin, we already gave out 
 		<?php echo getMastercoinTotal(); ?> MSC!</p>
       </div>
