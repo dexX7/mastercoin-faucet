@@ -65,7 +65,7 @@ class RedditConnector
     
     $this->authenticated = true;
     
-    return $client;
+    return $this->client;
   }
   
   // Returns user object or false, if failed

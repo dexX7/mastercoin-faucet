@@ -5,9 +5,17 @@ tiny amounts of Mastercoin, primarily to play around a little.
 
 Project status
 =================
-This is a first test. The actual payout module is not yet
-created. 5/5 authentication methods are implemented. The
-code is not complete nor optimized.
+5/5 authentication methods are implemented. Rudimentary payout
+system which uses raw transactions and needs to be in sync so
+that all outputs are available and balanaces are up-to-date.
+
+To do
+=================
+- Replace signature based bitcointalk.org authentication with
+  one-time-token string authentication  
+- More autonomous and dynamic payout system
+- Detect redemption of multiple rewards
+- DB and code cleanup and optimization
 
 Used compontents
 =================
@@ -22,6 +30,9 @@ https://github.com/scintill/php-bitcoin-signature-routines
 
 phpecc:
 https://github.com/mdanter/phpecc
+
+JSON-RPC PHP:
+http://jsonrpcphp.org
 
 Contact
 =================

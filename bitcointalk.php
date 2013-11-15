@@ -27,7 +27,7 @@
         <input name="address" type="text" class="form-control" placeholder="Your address" style="width: 400px;" 
 		autofocus required>          
       </div>
-      <input name="formid" type="hidden" value="<?php echo $formid; ?>">
+      <input name="state" type="hidden" value="<?php echo $formid; ?>">
       <button type="submit" class="btn btn-success">Submit</button>
     </form>
 
@@ -36,20 +36,26 @@
 
   <?php } else if($result == "STATE_INVALID_SIGNATURE") { ?>
 	
-    <div class="alert alert-warning">
+    <div class="alert alert-info">
     <strong>Signature invalid.</strong> You may try again, <?php echo $username; ?>.
     </div>
 
     <span class="description">
       <p>It looks like your signature is invalid.</p>
 
-      <p>You need to enter a valid Bitcoin address in your profile and submit a signature
+      <p>You need to enter a valid Bitcoin address in your profile and submit a <strong>signature</strong> 
       for the message <strong>Mastercoin faucet</strong>.
-		
-      <p>Please <a href="/bitcointalk-intro"><strong>try again</strong></a></p>.
+	  
+      <p>Please <a href="/bitcointalk-intro"><strong>try again</strong></a>.</p>
     </span>
 	
-    <br /><br /><br />
+  <div class="thumbnail">
+    <div class="row">
+      <div class="col-sm-6"><img class="preview" src="img/btctalksignclient.png" alt="Signing a message" ></div>
+      <div class="col-sm-6"><img class="preview" src="img/btctalksignforum.png" alt="bitcointalk.org profile"></div>
+    </div>
+  </div>
+  
     <p>Or <a href="/"><strong>go back</strong></a> to the frontpage.</p>
 		
   <?php } else if($result == "STATE_NOT_QUALIFIED") { ?>
@@ -96,21 +102,38 @@
     <br /><br /><br />
     <p><a href="/"><strong>Go back</strong></a> to the frontpage.</p>
     
-  <?php } else { ?>
+  <?php } else if($result == "STATE_SESSION_ERROR") { ?>
   
-    <div class="alert alert-danger">
-      <strong>Oh noes!</strong> There seems to be a problem.. :(
+    <div class="alert alert-warning">
+      <strong>Hmm..!</strong> There is a problem with your session.
     </div>
 	
     <span class="description">
       <p>There are several reasons why you might see this.</p>
-      <p>For example your session is no longer valid, because you refreshed this website.</p>
+      <p>Did you refresh this page or are your cookies disabled?</p>
       <p>You can <a href="/bitcointalk-intro"><strong>click here</strong></a> to start the authentication via 
       <strong>bitcointalk.org</strong> again.</p>
       <p>If you think there shouldn't be an error, please contact us via <a href="mailto:dexx@bitwatch.co">
       <strong>email</strong></a>.</p>
     </span>
 	
+    <br /><br /><br />
+    <p>Or <a href="/"><strong>go back</strong></a> to the frontpage.</p>
+
+  <?php } else { ?>
+  
+    <div class="alert alert-danger">
+      <strong>Oh noes!</strong> The authentication via bitcointalk.org failed.. :(
+    </div>
+    
+    <span class="description">
+      <p>Did you submit a valid link to your bitcointalk.org profile?</p>
+      <p>You can <a href="/bitcointalk-intro"><strong>click here</strong></a> to start the authentication via 
+	  <strong>bitcointalk.org</strong> again.</p>
+      <p>If you think there shouldn't be an error, please contact us via <a href="mailto:dexx@bitwatch.co">
+	  <strong>email</strong></a>.</p>
+    </span>
+    
     <br /><br /><br />
     <p>Or <a href="/"><strong>go back</strong></a> to the frontpage.</p>
 

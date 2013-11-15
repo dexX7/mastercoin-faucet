@@ -47,7 +47,7 @@ class FacebookConnector
     {
       return false;
     }
-	
+    
     if($response["code"] != 200)
     {
       return false;
@@ -60,13 +60,13 @@ class FacebookConnector
     {
       return false;
     }    
-
+    
     $this->client->setAccessToken($accessTokenResult["access_token"]);
     $this->client->setAccessTokenType(OAuth2\Client::ACCESS_TOKEN_BEARER);
     
     $this->authenticated = true;
     
-    return $client;
+    return $this->client;
   }
   
   // Returns user object or false, if failed
@@ -93,7 +93,7 @@ class FacebookConnector
     
     return $response["result"];
   }
-
+  
   // Returns true, if OAuth connection is established
   public function isAuthenticated()
   {

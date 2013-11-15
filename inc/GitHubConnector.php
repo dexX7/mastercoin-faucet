@@ -25,7 +25,7 @@ class GitHubConnector
     
     $this->client = new OAuth2\Client($this->clientId, $this->clientSecret, OAuth2\Client::AUTH_TYPE_FORM);
   }
-
+  
   // Creates OAuth authentication URL
   public function getAuthUrl($state = "", $scope = "")
   {
@@ -60,15 +60,15 @@ class GitHubConnector
     {
       return false;
     }
-
+    
     $this->client->setAccessToken($accessTokenResult["access_token"]);
     $this->client->setAccessTokenType(OAuth2\Client::ACCESS_TOKEN_BEARER);
     
     $this->authenticated = true;
     
-    return $client;
+    return $this->client;
   }
-
+  
   // Returns user object or false, if failed
   public function getUserDetails()
   {
@@ -118,7 +118,7 @@ class GitHubConnector
     
     return $response["result"];
   }
-
+  
   // Returns true, if OAuth connection is established
   public function isAuthenticated()
   {

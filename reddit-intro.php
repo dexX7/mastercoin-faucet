@@ -18,15 +18,16 @@
 
   <span class="description">
     <p>Great, you chose <strong>Reddit</strong> as authentication method. You can earn <strong>$0.5 worth of 
-	Mastercoin</strong> with this method, but you need more than <strong>100 karma</strong> to be rewarded. 
-	Don't worry, we don't want your data - this is solely a protection against abuse, so we are able to give out 
-    <strong>free MCS</strong> to as many interested people as possible.</p>
+    Mastercoin</strong> with this method, but you need more than <strong>100 karma</strong> to be rewarded.</p>
     
     <p>If you go on, you will be forwarded to <strong>Reddit</strong>. There you need to grant access to an 
-	application called <strong>Mastercoin faucet</strong>. You will be redirected to this page, after you finished 
-	the process. The access will be revoked automatically <strong>after 60 minutes</strong>. You can also revoke 
-	the access <a href="https://ssl.reddit.com/prefs/apps/" target="_blank"><strong>here</strong></a> manually.</p>
-    
+    application called <strong>Mastercoin faucet</strong>. You will be redirected to this page, after you finished 
+    the process. The access will be revoked automatically <strong>after 60 minutes</strong>. You can also revoke 
+    the access <a href="https://ssl.reddit.com/prefs/apps/" target="_blank"><strong>here</strong></a> manually.</p>
+
+    <p>Don't worry, we don't want your data - this is solely a protection against abuse, so we are able to give out 
+    <strong>free MCS</strong> to as many interested people as possible.
+	
     <p>Please <a href="<?php echo $url; ?>"><strong>click here</strong></a> to initiate the 
 	<strong>authentication</strong>, if you like to proceed.</p>
   </span>

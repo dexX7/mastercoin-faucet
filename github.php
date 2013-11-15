@@ -13,6 +13,8 @@
     
     <span class="description">
       <p>You are <strong>qualified</strong> for this reward. :)</p>
+      <p>Don't forget to check out the awesome <a href="https://github.com/mastercoin-MSC" target="_blank">
+      <strong>Mastercoin resources</strong></a> on GitHub.</p>
     </span>
 	
 	<br />
@@ -23,7 +25,7 @@
         <input name="address" type="text" class="form-control" placeholder="Your address" style="width: 400px;" 
 		autofocus required>          
       </div>
-      <input name="formid" type="hidden" value="<?php echo $formid; ?>">
+      <input name="state" type="hidden" value="<?php echo $formid; ?>">
       <button type="submit" class="btn btn-success">Submit</button>
     </form>
 
@@ -37,7 +39,7 @@
     </div>
     
     <span class="description">
-      <p>You must be stared on one of the <a href="http://wiki.mastercoin.org/index.php/FAQ#Is_Mastercoin_open_source.3F">
+      <p>You must be starred on one of the <a href="http://wiki.mastercoin.org/index.php/FAQ#Is_Mastercoin_open_source.3F">
       <strong>Mastercoin GitHub repositories</strong></a> or you need at least <strong>3 public repositories</strong> and 
       an account older than <strong>August 1, 2013</strong>.</p>
       <p>The requirement serves as protection against abuse, so we are able to give out as much free MCS as 
@@ -70,23 +72,23 @@
           
     <br /><br /><br />
     <p><a href="/"><strong>Go back</strong></a> to the frontpage.</p>
-    
+  
   <?php } else { ?>
   
-    <div class="alert alert-danger">
-      <strong>Oh noes!</strong> There seems to be a problem.. :(
+    <div class="alert alert-warning">
+      <strong>Oh noes!</strong> The authentication via GitHub failed.. :(
     </div>
-    
+	
     <span class="description">
       <p>There are several reasons why you might see this.</p>
-      <p>For example you declined the authorisation or your session is no longer valid, because you refreshed 
-      this website.</p>
+      <p>Did you decline the authorisation?</p>
+      <p>Or did you refresh this page or are your cookies disabled?</p>
       <p>You can <a href="/github-intro"><strong>click here</strong></a> to start the authentication via 
-	  <strong>GitHub</strong> again.</p>
+      <strong>GitHub</strong> again.</p>
       <p>If you think there shouldn't be an error, please contact us via <a href="mailto:dexx@bitwatch.co">
-	  <strong>email</strong></a>.</p>
+      <strong>email</strong></a>.</p>
     </span>
-    
+	
     <br /><br /><br />
     <p>Or <a href="/"><strong>go back</strong></a> to the frontpage.</p>
 

@@ -65,7 +65,7 @@ class GoogleConnector
     
     $this->authenticated = true;
     
-    return $client;
+    return $this->client;
   }
   
   // Returns user object or false, if failed
@@ -92,7 +92,7 @@ class GoogleConnector
     
     return $response["result"];
   }
-
+  
   // Returns true, if OAuth connection is established
   public function isAuthenticated()
   {

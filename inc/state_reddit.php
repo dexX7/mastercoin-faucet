@@ -5,66 +5,79 @@ require_once("inc/security.php");
 require_once("inc/validator.php");
 require_once("inc/RedditConnector.php");
 require_once("inc/SqlConnector.php");
-        
+
+$validsession = isValidSession("reddit");
 $validrequest = isValidRequest("reddit");
-        
+
 // Cleanup session
 unregisterReferrer();
 unregisterUid();
       
-// Results: valid, notqualified, alreadyclaimed, error
+// Results: valid, notqualified, alreadyclaimed, sessionerror, error
 $result = "STATE_ERROR";
   
 // Session id and referrer valid?
-if($validrequest)
+if($validsession)
 {
-  $connector = new RedditConnector($redditClientId, $redditClientSecret, $redditRedirectUrl);
-  $connector->authenticate($_GET["code"]);
-	
-  $user = $connector->getUserDetails();
-        
-  // OAuth authentication successful and user exists?
-  if($user)
+  // Code valid?
+  if($validrequest)
   {
-    $username = $user["name"];
-    $commentkarma = $user["comment_karma"];
-    $linkkarma = $user["link_karma"];
-	  
-    // Is user qualified for a reward?
-    if(isQualifiedReddit($user))
+    $connector = new RedditConnector($redditClientId, $redditClientSecret, $redditRedirectUrl);
+    $connector->authenticate($_GET["code"]);
+    
+    $user = $connector->getUserDetails();
+    
+    // OAuth authentication successful and user exists?
+    if($user)
     {
-      $sql = new SqlConnector($sqlHost, $sqlUsername, $sqlPassword, $sqlDatabase);            
-      $reward = $sql->lookupReward($username, "reddit");
-                              
-      // User already rewarded?
-      if($reward == false)
+      $username = $user["name"];
+      $identifier = $user["id"];
+      $commentkarma = $user["comment_karma"];
+      $linkkarma = $user["link_karma"];
+      
+      // Is user qualified for a reward?
+      if(isQualifiedReddit($user))
       {
-        // Last query successful?
-        if($sql->wasSuccess())
+        $sql = new SqlConnector($sqlHost, $sqlUsername, $sqlPassword, $sqlDatabase);            
+        $reward = $sql->lookupReward($identifier, "reddit");
+        
+        // User already rewarded?
+        if($reward == false)
         {
-          $formid = generateUid();
-          $registred = $sql->registerFormId($formid, $identifier, "reddit");
-		      
-          // Last query successful and claim registred?
-          if($registred)
+          // Last query successful?
+          if($sql->wasSuccess())
           {
-            $result = "STATE_VALID";
+            $formid = generateUid();
+            $registred = $sql->registerFormId($formid, $identifier, "reddit", $username);
+            
+            // Last query successful and claim registred?
+            if($registred)
+            {
+              // Register new session id
+              registerUid($formid);
+              
+              $result = "STATE_VALID";
+            }
           }
+        }
+        else
+        {
+          $txtimestamp = date("F j, Y", strtotime($reward->timestamp));
+          $txid = $reward->txid;
+          
+          $result = "STATE_ALREADY_CLAIMED";
         }
       }
       else
       {
-        $txtimestamp = date("F j, Y", strtotime($reward->timestamp));
-        $txid = $reward->txid;
-			
-        $result = "STATE_ALREADY_CLAIMED";
+        $result = "STATE_NOT_QUALIFIED";
       }
     }
-    else
-    {
-      $result = "STATE_NOT_QUALIFIED";
-    }
   }
+}
+else
+{
+  $result = "STATE_SESSION_ERROR";
 }
 
 ?>

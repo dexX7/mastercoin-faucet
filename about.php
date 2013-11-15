@@ -4,30 +4,30 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Mastercoin faucet">
+    <meta name="description" content="Earn free MSC on the Mastercoin faucet">
     <meta name="author" content="dexX7">
     <link rel="shortcut icon" href="ico/favicon.png">
-
+    
     <title>Mastercoin Faucet</title>
-
+    
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
-
+    
     <!-- Custom styles for this template -->
     <link href="css/custom.css" rel="stylesheet">
-
+    
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
   </head>
-
+    
   <body>
-
+    
   <!-- Wrap all page content here -->
   <div id="wrap">
-
+    
     <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top">
       <div class="container">
@@ -58,7 +58,7 @@
         </div><!--/.nav-collapse -->
       </div>
     </div>
-
+    
     <!-- Begin page content -->
     <div class="container">
       <div class="page-header">
@@ -87,18 +87,22 @@
       
       <p>phpecc<br />
       <a href="https://github.com/mdanter/phpecc">https://github.com/mdanter/phpecc</a></p>
+      
+      <p>JSON-RPC PHP<br />
+      <a href="http://jsonrpcphp.org">http://jsonrpcphp.org</a></p>
     </span>
     <br />
     
     <h4><strong>Who created this website?</strong></h4>
     <span class="description">
       <p>This website was created by <a href="https://bitcointalk.org">bitcointalk.org</a> user 
-      <a href="https://bitcointalk.org/index.php?action=profile;u=104899">dexX7</a>.</p>
+      <a href="https://bitcointalk.org/index.php?action=profile;u=104899">dexX7</a>.<br />
+      Bitcoin: <a href="bitcoin:1Bt2kePjGeM6LznEPbQ4xwpes99K2LCPwc">1Bt2kePjGeM6LznEPbQ4xwpes99K2LCPwc</a></p>
       <br />
       <p>Mastercoin faucet is an open source project and hosted on GitHub:<br />
       <a href="https://github.com/dexX7/mastercoin-faucet">
       https://github.com/dexX7/mastercoin-faucet</a></p>
     </span>
     <!-- /About -->
-        
+    
     <?php include("footer.php"); ?>

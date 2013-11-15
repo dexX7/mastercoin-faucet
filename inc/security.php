@@ -24,7 +24,7 @@ function isRedditCode($input)
 // Returns true, if input is a valid Google code
 function isGoogleCode($input)
 {
-  $pattern = "/^4\/[a-zA-Z0-9_-]{28}\.[a-zA-Z0-9]{31}$/";
+  $pattern = "/^4\/[a-zA-Z0-9_-]{28}\.[a-zA-Z0-9_-]{31}$/";
   return preg_match($pattern, $input);
 }
 
@@ -39,6 +39,13 @@ function isFacebookCode($input)
 function isGitHubCode($input)
 {
   $pattern = "/^[a-zA-Z0-9]{20}$/";
+  return preg_match($pattern, $input);
+}
+
+// Returns true, if input is a valid address
+function isAddress($input)
+{
+  $pattern = "/^[a-zA-Z0-9]{33,34}$/";
   return preg_match($pattern, $input);
 }
 
@@ -70,6 +77,12 @@ function unregisterUid()
   {
     unset($_SESSION["state"]);
   }
+}
+
+// Returns true, if address is valid
+function hasValidAddress()
+{
+  return isset($_POST["address"]) && isAddress($_POST["address"]);
 }
 
 // Returns true, if referrer is valid
@@ -129,11 +142,21 @@ function hasValidBitcointalkData()
 }
 
 // Returns true, if referrer and session id is valid
+function isValidSession($referrer)
+{
+  return hasValidUid() && hasValidReferrer($referrer);
+}
+
+// Returns true, if referrer and session id is valid for POST
+function isValidPostSession($referrer)
+{
+  return hasValidPostUid() && hasValidReferrer($referrer);
+}
+
+// Returns true, if request code is valid
 function isValidRequest($referrer)
 {
-  $hasCode = isset($_GET["code"]);
-  
-  if(hasValidUid() && hasValidReferrer($referrer) && $hasCode)
+  if(isset($_GET["code"]))
   {
     switch($referrer)
     {
@@ -145,7 +168,7 @@ function isValidRequest($referrer)
       
       case "facebook":
         return isFacebookCode($_GET["code"]);
-		  
+        
       case "github":
         return isGitHubCode($_GET["code"]);
     }
@@ -157,13 +180,10 @@ function isValidRequest($referrer)
 // Returns true, if referrer and session id is valid for POST
 function isValidPostRequest($referrer)
 {
-  if(hasValidPostUid() && hasValidReferrer($referrer))
+  switch($referrer)
   {
-    switch($referrer)
-    {
-      case "bitcointalk":    
-        return hasValidBitcointalkData();
-    }
+    case "bitcointalk":    
+      return hasValidBitcointalkData();
   }
   
   return false;

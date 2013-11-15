@@ -6,8 +6,9 @@ require_once("inc/validator.php");
 require_once("inc/GitHubConnector.php");
 require_once("inc/SqlConnector.php");
 
+$validsession = isValidSession("github");
 $validrequest = isValidRequest("github");
-        
+
 // Cleanup session
 unregisterReferrer();
 unregisterUid();
@@ -16,57 +17,62 @@ unregisterUid();
 $result = "STATE_ERROR";
   
 // Session id and referrer valid?
-if($validrequest)
+if($validsession)
 {
-  $connector = new GitHubConnector($gitClientId, $gitClientSecret, $gitRedirectUrl);
-  $connector->authenticate($_GET["code"]);
-	
-  $user = $connector->getUserDetails();
-  $repos = $connector->getRepos();
-	
-  // OAuth authentication successful and user exists?
-  if($user)
+  // Code valid?
+  if($validrequest)
   {
-    $username = $user["login"];
-    $identifier = $user["id"];
-    $linkkarma = $user["link_karma"];
-	  
-    // Is user qualified for a reward?
-    if(isQualifiedGitHub($user, $repos))
+    $connector = new GitHubConnector($gitClientId, $gitClientSecret, $gitRedirectUrl);
+    $connector->authenticate($_GET["code"]);
+    
+    $user = $connector->getUserDetails();
+    $repos = $connector->getRepos();
+    
+    // OAuth authentication successful and user exists?
+    if($user)
     {
-      $sql = new SqlConnector($sqlHost, $sqlUsername, $sqlPassword, $sqlDatabase);            
-      $reward = $sql->lookupReward($identifier, "github");
-                              
-      // User already rewarded?
-      if($reward == false)
+      $username = $user["login"];
+      $identifier = $user["id"];
+      
+      // Is user qualified for a reward?
+      if(isQualifiedGitHub($user, $repos))
       {
-        // Last query successful?
-        if($sql->wasSuccess())
+        $sql = new SqlConnector($sqlHost, $sqlUsername, $sqlPassword, $sqlDatabase);            
+        $reward = $sql->lookupReward($identifier, "github");
+        
+        // User already rewarded?
+        if($reward == false)
         {
-          $formid = generateUid();
-          $registred = $sql->registerFormId($formid, $identifier, "github");
-		      
-          // Last query successful and claim registred?
-          if($registred)
+          // Last query successful?
+          if($sql->wasSuccess())
           {
-            $result = "STATE_VALID";
+            $formid = generateUid();
+            $registred = $sql->registerFormId($formid, $identifier, "github", $username);
+            
+            // Last query successful and claim registred?
+            if($registred)
+            {
+              // Register new session id
+              registerUid($formid);
+              
+              $result = "STATE_VALID";
+            }
           }
+        }
+        else
+        {
+          $txtimestamp = date("F j, Y", strtotime($reward->timestamp));
+          $txid = $reward->txid;
+          
+          $result = "STATE_ALREADY_CLAIMED";
         }
       }
       else
       {
-        $txtimestamp = date("F j, Y", strtotime($reward->timestamp));
-        $txid = $reward->txid;
-			
-        $result = "STATE_ALREADY_CLAIMED";
+        $result = "STATE_NOT_QUALIFIED";
       }
     }
-    else
-    {
-      $result = "STATE_NOT_QUALIFIED";
-    }
   }
-}
 }
 
 ?>

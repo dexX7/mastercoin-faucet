@@ -1,4 +1,6 @@
 <?php
+error_reporting(0);
+date_default_timezone_set('UTC');
 session_start();
 require_once("inc/balance.php");
 ?>
@@ -8,7 +10,7 @@ require_once("inc/balance.php");
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Mastercoin faucet">
+    <meta name="description" content="Earn free MSC on the Mastercoin faucet">
     <meta name="author" content="dexX7">
     <link rel="shortcut icon" href="ico/favicon.png">
 
@@ -66,8 +68,8 @@ require_once("inc/balance.php");
     <!-- Begin page content -->
     <div class="container">
       <div class="page-header">
-        <h1>The Mastercoin faucet (test stage, no payout yet)</h1>
+        <h1>The Mastercoin faucet (test stage, limited amount of 0.0001 payouts)</h1>
         <p class="lead">Earn up to $0.5 worth of free Mastercoin, we already gave out 
-		<?php echo getMastercoinTotal(); ?> MSC!</p>
+		<?php echo getMastercoinTotal(); ?>!</p>
       </div>
       

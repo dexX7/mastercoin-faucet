@@ -23,17 +23,17 @@
         <input name="address" type="text" class="form-control" placeholder="Your address" style="width: 400px;" 
 		autofocus required>          
       </div>
-      <input name="formid" type="hidden" value="<?php echo $formid; ?>">
+      <input name="state" type="hidden" value="<?php echo $formid; ?>">
       <button type="submit" class="btn btn-success">Submit</button>
     </form>
 
     <br /><br /><br /><br /><br />
     <p>Or <a href="/"><strong>go back</strong></a> to the frontpage.</p>
     
-  <?php } else if($result == "STATE_ALREADY_CLAIMED") { ?>
+  <?php } else if($result == "STATE_INVALID_ADDRESS") { ?>
   
     <div class="alert alert-warning">
-      <strong>Hmm...!</strong> You already claimed this reward.
+      <strong>Invalid address.</strong> 
     </div>
           
     <span class="description">  
@@ -52,17 +52,16 @@
           
     <br /><br /><br />
     <p><a href="/"><strong>Go back</strong></a> to the frontpage.</p>
-    
-  <?php } else { ?>
   
-    <div class="alert alert-danger">
-      <strong>Oh noes!</strong> There seems to be a problem.. :(
+  <?php } else if($result == "STATE_SESSION_ERROR") { ?>
+  
+    <div class="alert alert-warning">
+      <strong>Hmm..!</strong> There is a problem with your session.
     </div>
 	
     <span class="description">
       <p>There are several reasons why you might see this.</p>
-      <p>For example you declined the authorisation or your session is no longer valid, because you refreshed 
-      this website.</p>
+      <p>Did you refresh this page or are your cookies disabled?</p>
       <p>You can <a href="/facebook-intro"><strong>click here</strong></a> to start the authentication via 
       <strong>Facebook</strong> again.</p>
       <p>If you think there shouldn't be an error, please contact us via <a href="mailto:dexx@bitwatch.co">
@@ -71,8 +70,27 @@
 	
     <br /><br /><br />
     <p>Or <a href="/"><strong>go back</strong></a> to the frontpage.</p>
+  
+  
+  <?php } else { ?>
+  
+    <div class="alert alert-danger">
+      <strong>Oh noes!</strong> The authentication via Facebook failed.. :(
+    </div>
+    
+    <span class="description">
+      <p>Did you decline the authorisation?</p>
+      <p>You can <a href="/facebook-intro"><strong>click here</strong></a> to start the authentication via 
+	  <strong>Facebook</strong> again.</p>
+      <p>If you think there shouldn't be an error, please contact us via <a href="mailto:dexx@bitwatch.co">
+	  <strong>email</strong></a>.</p>
+    </span>
+    
+    <br /><br /><br />
+    <p>Or <a href="/"><strong>go back</strong></a> to the frontpage.</p>
 
   <?php } ?>
+
 
 <!-- /Facebook callback -->
 

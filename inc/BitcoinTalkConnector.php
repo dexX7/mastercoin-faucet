@@ -36,7 +36,7 @@ class BitcoinTalkConnector
   {
     return "https://bitcointalk.org/index.php?action=profile;u=".$uid.";wap";
   }
-
+  
   // Extracts user id or returns false, if failed
   private function extractUid($link)
   {  

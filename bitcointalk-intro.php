@@ -19,8 +19,8 @@
         
     <p>Here comes the tricky part, you need to do three things to claim the reward. At first, you have to find 
     a link to your <strong>user profile</strong>. Paste the link to your profile in the <strong>first box</strong> 
-	below </strong>. Then you have to make sure that you entered a <strong>Bitcoin address</strong> in your 
-	profile. You need to sign the message <strong>Mastercoin faucet</strong> with that address.</p>
+	below</strong>. You have also to make sure that you entered a <strong>Bitcoin address</strong> in your 
+	profile. Finally you need to sign the message <strong>Mastercoin faucet</strong> with that address.</p>
   </span>
   
   <div style="margin: 20px 0px;">
