@@ -44,7 +44,7 @@ if($validsession)
       {
         $minamount = 0.0000546;
         $fee = 0.0001;
-        $btcrequired = (3 * $minamount) + $fee;
+        $btcrequired = (4 * $minamount) + $fee;
         
         $mscrequired = 0.0;
         $testrequired = 0.0;
