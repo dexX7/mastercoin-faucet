@@ -30,10 +30,10 @@
     <br /><br /><br /><br /><br />
     <p>Or <a href="/"><strong>go back</strong></a> to the frontpage.</p>
     
-  <?php } else if($result == "STATE_INVALID_ADDRESS") { ?>
+  <?php } else if($result == "STATE_ALREADY_CLAIMED") { ?>
   
     <div class="alert alert-warning">
-      <strong>Invalid address.</strong> 
+      <strong>Hmm...!</strong> You already claimed this reward.
     </div>
           
     <span class="description">  
