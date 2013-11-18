@@ -5,15 +5,14 @@ tiny amounts of Mastercoin, primarily to play around a little.
 
 Project status
 =================
-5/5 authentication methods are implemented. Rudimentary payout
-system which uses raw transactions and needs to be in sync so
-that all outputs are available and balanaces are up-to-date.
+5/5 authentication methods are implemented. Payout system that
+uses raw transactions and finds fitting unspent outputs. MSC 
+balanace needs to be synced manually.
 
 To do
 =================
 - Replace signature based bitcointalk.org authentication with
-  one-time-token string authentication  
-- More autonomous and dynamic payout system
+  one-time-token string authentication
 - Detect redemption of multiple rewards
 - DB and code cleanup and optimization
 
@@ -37,7 +36,7 @@ http://jsonrpcphp.org
 Contact
 =================
 Email:
-dexx@bitwatch.co
+faucet@bitwatch.co
 
 Bitcointalk.org:
 https://bitcointalk.org/index.php?action=profile;u=104899

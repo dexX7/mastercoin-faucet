@@ -1,5 +1,7 @@
 <?php
 
+require_once("inc/verifymessage.php");
+
 class RawTransaction
 {
   private $count_inputs = 0;
@@ -7,6 +9,8 @@ class RawTransaction
   private $inputs = "";
   private $outputs = "";
   
+  private $outputamount = 0.0;
+
   public function addInput($txid, $vout)
   {
     $this->count_inputs++;
@@ -15,6 +19,7 @@ class RawTransaction
   
   public function addSimpleOutput($address, $amount)
   {
+    $this->outputamount += $amount;
     $amount = $this->toSatoshi($amount);
     $this->count_outputs++;
     $this->outputs = $this->outputs . $this->buildSimpleOutput($address, $amount);
@@ -22,9 +27,15 @@ class RawTransaction
   
   public function addMultiSignOutput($pubkey1, $pubkey2, $amount)
   {
+    $this->outputamount += $amount;
     $amount = $this->toSatoshi($amount);
     $this->count_outputs++;
     $this->outputs = $this->outputs . $this->buildMultiSigOutput($pubkey1, $pubkey2, $amount);
+  }
+  
+  public function getOutputAmount()
+  {
+    return $this->outputamount;
   }
   
   // tx type 0: simple send, curr id 1: msc, 2: test msc
@@ -96,27 +107,27 @@ class RawTransaction
   private function buildSimpleOutput($address, $amount)
   {
     $txhex = $this->int64ToHex($amount); // amount
-    $txhex = $txhex . "19";    // PUSH_NEXT
-    $txhex = $txhex . "76";    // OP_DUP
-    $txhex = $txhex . "a9";    // OP_HASH160
-    $txhex = $txhex . "14";    // bytes to push
+    $txhex = $txhex . "19"; // PUSH_NEXT
+    $txhex = $txhex . "76"; // OP_DUP
+    $txhex = $txhex . "a9"; // OP_HASH160
+    $txhex = $txhex . "14"; // bytes to push
     $txhex = $txhex . $this->addressToPubKey($address); // bytes to push
-    $txhex = $txhex . "88";    // OP_EQUALVERIFY
-    $txhex = $txhex . "ac";    // OP_CHECKSIG
+    $txhex = $txhex . "88"; // OP_EQUALVERIFY
+    $txhex = $txhex . "ac"; // OP_CHECKSIG
     return $txhex;
   }
   
   private function buildMultiSigOutput($pubkey1, $pubkey2, $amount)
   {
     $txhex = $this->int64ToHex($amount); // amount
-    $txhex = $txhex . "47";    // PUSH_NEXT
-    $txhex = $txhex . "51";    // OP_1
-    $txhex = $txhex . "21";    // PUSH_NEXT
-    $txhex = $txhex . $pubkey1;    // first pub key
-    $txhex = $txhex . "21";    // PUSH_NEXT
-    $txhex = $txhex . $pubkey2;    // second pub key
-    $txhex = $txhex . "52";    // OP_2
-    $txhex = $txhex . "ae";    // OP_CHECKMULTISIG
+    $txhex = $txhex . "47"; // PUSH_NEXT
+    $txhex = $txhex . "51"; // OP_1
+    $txhex = $txhex . "21"; // PUSH_NEXT
+    $txhex = $txhex . $pubkey1; // first pub key
+    $txhex = $txhex . "21"; // PUSH_NEXT
+    $txhex = $txhex . $pubkey2; // second pub key
+    $txhex = $txhex . "52"; // OP_2
+    $txhex = $txhex . "ae"; // OP_CHECKMULTISIG
     return $txhex;
   }
   
@@ -127,15 +138,15 @@ class RawTransaction
     
     for($i = 1; $i <= $seqnum; $i++)
     {
-        $shahash = hash('sha256', $shahash);
+      $shahash = hash('sha256', $shahash);
     }
     
     for($a = 0; $a <= 60; $a = $a + 2)
     {
-        $byte1 = pack("H*", substr($shahash, $a, 2));// hex2bin(substr($shahash, $a, 2));
-        $byte2 = pack("H*", substr($pubkeyhex, $a, 2));// hex2bin(substr($pubkeyhex, $a, 2));
-        $xorhex = bin2hex($byte1 ^ $byte2);
-        $obfuscated = $obfuscated . $xorhex;
+      $byte1 = pack("H*", substr($shahash, $a, 2));
+      $byte2 = pack("H*", substr($pubkeyhex, $a, 2));
+      $xorhex = bin2hex($byte1 ^ $byte2);
+      $obfuscated = $obfuscated . $xorhex;
     }
 	
     return $obfuscated;

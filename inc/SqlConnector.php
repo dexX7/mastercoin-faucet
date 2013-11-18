@@ -2,7 +2,7 @@
 
 class SqlConnector {
   private $link = null;
-  
+    
   // Initializes MySQLi connection
   public function __construct($host, $user, $pw, $db)
   {
@@ -63,49 +63,37 @@ class SqlConnector {
     return $obj;
   }
   
-  // Returns oldest unspent output to build tx with at least x Bitcoin, y Mastercoin, z Test Mastercoin
-  public function getUnspent($bitcoin, $mastercoin, $testcoin)
+  // Returns wallet balances
+  public function getWallets()
   {
-    // Is connection established?
-    if($this->hasFailed())
-    {
-      return false;
-    }
+    $balance = array();
     
-    $cleanbtc = $this->link->escape_string($bitcoin);
-    $cleanmsc = $this->link->escape_string($mastercoin);
-    $cleantest = $this->link->escape_string($testcoin);
-      
-    $query = "SELECT id, address, pubkey, bitcoin, mastercoin, testcoin, lastuse, lasttxid, vout FROM unspent
-              WHERE bitcoin >= '{$cleanbtc}' AND mastercoin >= '{$cleanmsc}' AND testcoin >= '{$cleantest}'
-              ORDER BY lastuse";
+    $query = "SELECT address, pubkey, mastercoin, testcoin FROM wallets";
     $result = $this->link->query($query);
     
-    $obj = $result->fetch_object();
+    while ($row = $result->fetch_assoc())
+    {
+      $balance[$row["address"]] = $row;
+    }
+
     $result->free();
     
-    return $obj;
+    return $balance;
   }
   
-  // Updates balance and unspent output
-  public function updateBalance($id, $bitcoin, $mastercoin, $testcoin, $lasttxid, $vout)
+   // Updates balance and unspent output
+  public function updateWallet($address, $mastercoin, $testcoin, $txid)
   {
-    // Is connection established?
-    if($this->hasFailed())
-    {
-      return false;
-    }
-    
-    $cleanid = $this->link->escape_string($id);
-    $cleanbtc = $this->link->escape_string($bitcoin);
-    $cleanmsc = $this->link->escape_string($mastercoin);
-    $cleantest = $this->link->escape_string($testcoin);
-    $cleantxid = $this->link->escape_string($lasttxid);
-    $cleanvout = $this->link->escape_string($vout);
     $timestamp = date("Y-m-d H:i:s");
     
-    $query = "UPDATE unspent SET bitcoin = '{$cleanbtc}', mastercoin = '{$cleanmsc}', testcoin = '{$cleantest}',
-              lastuse = '{$timestamp}', lasttxid = '{$cleantxid}', vout = '{$cleanvout}' WHERE id = '{$cleanid}'";
+    $address = $this->link->escape_string($address);
+    $mastercoin = $this->link->escape_string($mastercoin);
+    $testcoin = $this->link->escape_string($testcoin);
+    $timestamp = $this->link->escape_string($timestamp);
+    $txid = $this->link->escape_string($txid);    
+    
+    $query = "UPDATE wallets SET mastercoin = '{$mastercoin}', testcoin = '{$testcoin}', lastuse = '{$timestamp}',
+              txid = '{$txid}' WHERE address LIKE '{$address}'";
     
     return $this->link->query($query);
   }
@@ -159,7 +147,7 @@ class SqlConnector {
     $cleanuser = $this->link->escape_string($userhash);
     $cleanmethod = $this->link->escape_string($method);
     
-    $query = "SELECT method, user, timestamp, amount, txid FROM claims WHERE method LIKE '{$cleanmethod}' 
+    $query = "SELECT method, user, timestamp, amount, txid FROM claims WHERE method LIKE '{$cleanmethod}'
               AND user LIKE '{$cleanuser}'";
     $result = $this->link->query($query);
     
