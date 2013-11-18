@@ -7,8 +7,9 @@ require_once("inc/verifymessage.php");
 require_once("inc/BitcoinTalkConnector.php");
 require_once("inc/SqlConnector.php");
 
-$validsession = isValidPostSession("bitcointalk");
-$validrequest = isValidPostRequest("bitcointalk");
+$referrer = "bitcointalk";
+$validsession = isValidPostSession($referrer);
+$validrequest = isValidPostRequest($referrer);
 
 // Cleanup session
 unregisterReferrer();
@@ -56,7 +57,7 @@ if($validsession)
         if(isQualifiedBitcointalk($user))
         {
           $sql = new SqlConnector($sqlHost, $sqlUsername, $sqlPassword, $sqlDatabase);            
-          $reward = $sql->lookupReward($identifier, "bitcointalk");
+          $reward = $sql->lookupReward($identifier, $referrer);
           
           // User already rewarded?
           if($reward == false)
@@ -65,7 +66,7 @@ if($validsession)
             if($sql->wasSuccess())
             {
               $formid = generateUid();
-              $registred = $sql->registerFormId($formid, $identifier, "bitcointalk", $username);
+              $registred = $sql->registerFormId($formid, $identifier, $referrer, $username);
               
               // Last query successful and claim registred?
               if($registred)

@@ -2,7 +2,7 @@
 
 /***
 
-  Edited and modified by dexx@bitwatch.co on 2013-11-15.
+  Edited and modified by faucet@bitwatch.co on 2013-11-15.
 
   Source:
     https://github.com/scintill/php-bitcoin-signature-routines
@@ -47,14 +47,14 @@ $secp256k1_G = new Point($secp256k1,
   '0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8',
   '0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141');
 
-// Added on 2013-11-15 by dexx@bitwatch.co
+// Added on 2013-11-15 by faucet@bitwatch.co
 function isValidBitcoinAddress($address)
 {
   $address = base58check_decode($address);
   return strlen($address) == 21 and $address[0] == "\x0";
 }
 
-// Added/modified Added on 2013-11-15 by dexx@bitwatch.co
+// Added/modified Added on 2013-11-15 by faucet@bitwatch.co
 function getVerifiedAddress($signature, $message)
 {
   $derivedAddress = getVerifiedAddress160Bin($signature, $message);	
@@ -62,7 +62,7 @@ function getVerifiedAddress($signature, $message)
   return $encoded;
 }
 
-// Added/modified on 2013-11-15 by dexx@bitwatch.co
+// Added/modified on 2013-11-15 by faucet@bitwatch.co
 function isMessageSignatureValid($address, $signature, $message)
 {
   $address = base58check_decode($address);
@@ -75,7 +75,7 @@ function isMessageSignatureValid($address, $signature, $message)
   return $address === $derivedAddress;
 }
 
-// Added/modified on 2013-11-15 by dexx@bitwatch.co
+// Added/modified on 2013-11-15 by faucet@bitwatch.co
 function getVerifiedAddress160Bin($signature, $message)
 {
   global $secp256k1_G;
@@ -123,7 +123,7 @@ function getVerifiedAddress160Bin($signature, $message)
   return $derivedAddress;
 }
 
-// Added on 2013-11-15 by dexx@bitwatch.co
+// Added on 2013-11-15 by faucet@bitwatch.co
 function base58check_encode($hash160)
 {
   $hash = "\x00" . $hash160;
@@ -136,7 +136,7 @@ function base58check_encode($hash160)
   return $encoded;
 }
 
-// Added on 2013-11-15 by dexx@bitwatch.co
+// Added on 2013-11-15 by faucet@bitwatch.co
 function base58_encode($input)
 {
   $alphabet = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
@@ -156,7 +156,7 @@ function base58_encode($input)
   return($encoded);
 }
 
-// Added on 2013-11-15 by dexx@bitwatch.co
+// Added on 2013-11-15 by faucet@bitwatch.co
 function bchexdec($hex)
 {
   if(strlen($hex) == 1)

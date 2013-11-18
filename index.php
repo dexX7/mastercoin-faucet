@@ -10,20 +10,22 @@
     peer to peer nature. History has shown that when a digital service has a single point of failure it will be 
     attacked and taken down. Mastercoin removes many of today's bottle necks, that are preventing the wide spread 
     use of Bitcoin.</p>
-  </span>
-
-  <h3>How can I earn MSC?</h3>
-  <span class="description">
-    <p>This website, Mastercoin faucet, rewards user with small amounts of $0.1 - $0.5 worth of Mastercoin for
-    doing simple tasks.</p>
-    <p>This project is sponsored by <a href="http://www.mastercoin.org/"><strong>the Mastercoin Foundation</strong></a>.
-    All authentication steps are required to prevent abuse, because our goal is to reach as many interested 
-    people as possible.</p>
+    <p>Check out <a href="https://bitcointalk.org/index.php?topic=265488.0" target="_blank">
+    <strong>bitcointalk.org</strong></a>, <a href="http://www.reddit.com/r/mastercoin" target="_blank">
+    <strong>/r/mastercoin</strong></a> or <a href="http://www.mastercoin.org/" target="_blank">
+    <strong>mastercoin.org</strong></a> to learn more.</p>
   </span>
   
-  <h3>Okay, so how do I earn MSC?</h3>
+  <h3>How can I earn MSC?</h3>
   <span class="description">
-    <p>Please choose one of the following authentication methods to unlock a reward:</p>
+    <p>This website, the Mastercoin faucet, rewards users with small amounts of Mastercoin and is sponsored by 
+    <a href="http://www.mastercoin.org/" target="_blank"><strong>the Mastercoin Foundation</strong></a> to allow users 
+    to get more familiar with this additional protocol layer and to spread awareness. <strong>We are currently in a test 
+    phase to gather feedback and eliminate potential bugs before switching to more significant amounts. If you like, 
+    visit the <a href="https://bitcointalk.org/index.php?topic=101407.0" target="_blank">developer thread</a> on 
+    bitcointalk.org. Feel free to test crazy stuff! :p</strong></p>
+    <p>To unlock a reward, choose one of the following authentication methods. The authentication steps and requirements are 
+    intended to prevent abuse, because our goal is to reach as many interested people as possible.</p>
   </span>
   
   <ul>
@@ -36,14 +38,14 @@
     
     <li><a href="/github-intro"><strong>GitHub</strong></a><br />
     <i>You must be starred on one of the 
-    <a href="http://wiki.mastercoin.org/index.php/FAQ#Is_Mastercoin_open_source.3F">Mastercoin GitHub repositories</a> 
+    <a href="http://wiki.mastercoin.org/index.php/FAQ#Is_Mastercoin_open_source.3F" target="_blank">Mastercoin GitHub repositories</a> 
     or you need at least 3 public repositories and an account older than August 1, 2013.</i><br />&nbsp;</li>
     
     <li><a href="/google-intro"><strong>Google</strong></a><br />&nbsp;</li>
     
     <li><a href="/facebook-intro"><strong>Facebook</strong></a><br />&nbsp;</li>
   </ul>
-
+  
 <!-- /Home -->
 
 <?php include("footer.php"); ?>

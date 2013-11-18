@@ -5,9 +5,10 @@ require_once("inc/security.php");
 require_once("inc/validator.php");
 require_once("inc/FacebookConnector.php");
 require_once("inc/SqlConnector.php");
-        
-$validsession = isValidSession("facebook");
-$validrequest = isValidRequest("facebook");
+
+$referrer = "facebook";
+$validsession = isValidSession($referrer);
+$validrequest = isValidRequest($referrer);
         
 // Cleanup session
 unregisterReferrer();
@@ -35,7 +36,7 @@ if($validsession)
       $fullname = $user["name"];
       
       $sql = new SqlConnector($sqlHost, $sqlUsername, $sqlPassword, $sqlDatabase);
-      $reward = $sql->lookupReward($identifier, "facebook");
+      $reward = $sql->lookupReward($identifier, $referrer);
       
       // User already rewarded?
       if($reward == false)
@@ -44,7 +45,7 @@ if($validsession)
         if($sql->wasSuccess())
         {
           $formid = generateUid();
-          $registred = $sql->registerFormId($formid, $identifier, "facebook", $fullname);
+          $registred = $sql->registerFormId($formid, $identifier, $referrer, $fullname);
           
           // Last query successful and claim registred?
           if($registred)

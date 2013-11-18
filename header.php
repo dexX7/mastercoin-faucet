@@ -13,27 +13,27 @@ require_once("inc/balance.php");
     <meta name="description" content="Earn free MSC on the Mastercoin faucet">
     <meta name="author" content="dexX7">
     <link rel="shortcut icon" href="ico/favicon.png">
-
+    
     <title>Mastercoin Faucet</title>
-
+    
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
-
+    
     <!-- Custom styles for this template -->
     <link href="css/custom.css" rel="stylesheet">
-
+    
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
   </head>
-
+  
   <body>
-
+  
   <!-- Wrap all page content here -->
   <div id="wrap">
-
+  
     <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top">
       <div class="container">
@@ -64,12 +64,12 @@ require_once("inc/balance.php");
         </div><!--/.nav-collapse -->
       </div>
     </div>
-
+    
     <!-- Begin page content -->
     <div class="container">
       <div class="page-header">
-        <h1>The Mastercoin faucet (test stage, limited amount of 0.0001 payouts)</h1>
+        <h1>The Mastercoin faucet (test stage)</h1>
         <p class="lead">Earn up to $0.5 worth of free Mastercoin, we already gave out 
-		<?php echo getMastercoinTotal(); ?>!</p>
+        <?php echo getMastercoinTotal(); ?></p>
       </div>
       

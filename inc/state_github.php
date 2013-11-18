@@ -6,8 +6,9 @@ require_once("inc/validator.php");
 require_once("inc/GitHubConnector.php");
 require_once("inc/SqlConnector.php");
 
-$validsession = isValidSession("github");
-$validrequest = isValidRequest("github");
+$referrer = "github";
+$validsession = isValidSession($referrer);
+$validrequest = isValidRequest($referrer);
 
 // Cleanup session
 unregisterReferrer();
@@ -38,7 +39,7 @@ if($validsession)
       if(isQualifiedGitHub($user, $repos))
       {
         $sql = new SqlConnector($sqlHost, $sqlUsername, $sqlPassword, $sqlDatabase);            
-        $reward = $sql->lookupReward($identifier, "github");
+        $reward = $sql->lookupReward($identifier, $referrer);
         
         // User already rewarded?
         if($reward == false)
@@ -47,7 +48,7 @@ if($validsession)
           if($sql->wasSuccess())
           {
             $formid = generateUid();
-            $registred = $sql->registerFormId($formid, $identifier, "github", $username);
+            $registred = $sql->registerFormId($formid, $identifier, $referrer, $username);
             
             // Last query successful and claim registred?
             if($registred)

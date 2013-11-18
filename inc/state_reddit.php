@@ -6,8 +6,9 @@ require_once("inc/validator.php");
 require_once("inc/RedditConnector.php");
 require_once("inc/SqlConnector.php");
 
-$validsession = isValidSession("reddit");
-$validrequest = isValidRequest("reddit");
+$referrer = "reddit";
+$validsession = isValidSession($referrer);
+$validrequest = isValidRequest($referrer);
 
 // Cleanup session
 unregisterReferrer();
@@ -39,7 +40,7 @@ if($validsession)
       if(isQualifiedReddit($user))
       {
         $sql = new SqlConnector($sqlHost, $sqlUsername, $sqlPassword, $sqlDatabase);            
-        $reward = $sql->lookupReward($identifier, "reddit");
+        $reward = $sql->lookupReward($identifier, $referrer);
         
         // User already rewarded?
         if($reward == false)
@@ -48,7 +49,7 @@ if($validsession)
           if($sql->wasSuccess())
           {
             $formid = generateUid();
-            $registred = $sql->registerFormId($formid, $identifier, "reddit", $username);
+            $registred = $sql->registerFormId($formid, $identifier, $referrer, $username);
             
             // Last query successful and claim registred?
             if($registred)
