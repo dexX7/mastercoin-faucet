@@ -12,17 +12,17 @@
     use of Bitcoin.</p>
     <p>Check out <a href="https://bitcointalk.org/index.php?topic=265488.0" target="_blank">
     <strong>bitcointalk.org</strong></a>, <a href="http://www.reddit.com/r/mastercoin" target="_blank">
-    <strong>/r/mastercoin</strong></a> or <a href="http://www.mastercoin.org/" target="_blank">
+    <strong>/r/mastercoin</strong></a> or <a href="http://www.mastercoin.org" target="_blank">
     <strong>mastercoin.org</strong></a> to learn more.</p>
   </span>
   
   <h3>How can I earn MSC?</h3>
   <span class="description">
     <p>This website, the Mastercoin faucet, rewards users with small amounts of Mastercoin and is sponsored by 
-    <a href="http://www.mastercoin.org/" target="_blank"><strong>the Mastercoin Foundation</strong></a> to allow users 
+    <a href="http://www.mastercoin.org" target="_blank"><strong>the Mastercoin Foundation</strong></a> to allow users 
     to get more familiar with this additional protocol layer and to spread awareness. <strong>We are currently in a test 
     phase to gather feedback and eliminate potential bugs before switching to more significant amounts. If you like, 
-    visit the <a href="https://bitcointalk.org/index.php?topic=101407.0" target="_blank">developer thread</a> on 
+    visit the <a href="https://bitcointalk.org/index.php?topic=321358.0" target="_blank">developer thread</a> on 
     bitcointalk.org. Feel free to test crazy stuff! :p</strong></p>
     <p>To unlock a reward, choose one of the following authentication methods. The authentication steps and requirements are 
     intended to prevent abuse, because our goal is to reach as many interested people as possible.</p>
