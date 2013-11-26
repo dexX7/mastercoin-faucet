@@ -14,34 +14,6 @@ function isUid($input)
   return preg_match($pattern, $input);
 }
 
-// Returns true, if input is a valid Reddit code
-function isRedditCode($input)
-{
-  $pattern = "/^[a-zA-Z0-9_-]{27}$/";
-  return preg_match($pattern, $input);
-}
-
-// Returns true, if input is a valid Google code
-function isGoogleCode($input)
-{
-  $pattern = "/^4\/[a-zA-Z0-9_-]{28}\.[a-zA-Z0-9_-]{31}$/";
-  return preg_match($pattern, $input);
-}
-
-// Returns true, if input is a valid Facebook code
-function isFacebookCode($input)
-{
-  $pattern = "/^[a-zA-Z0-9_-]{323}$/";
-  return preg_match($pattern, $input);
-}
-
-// Returns true, if input is a valid GitHub code
-function isGitHubCode($input)
-{
-  $pattern = "/^[a-zA-Z0-9]{20}$/";
-  return preg_match($pattern, $input);
-}
-
 // Returns true, if input is a valid address
 function isAddress($input)
 {
@@ -141,40 +113,10 @@ function hasValidBitcointalkData()
   return $isValid;
 }
 
-// Returns true, if referrer and session id is valid
-function isValidSession($referrer)
-{
-  return hasValidUid() && hasValidReferrer($referrer);
-}
-
 // Returns true, if referrer and session id is valid for POST
 function isValidPostSession($referrer)
 {
   return hasValidPostUid() && hasValidReferrer($referrer);
-}
-
-// Returns true, if request code is valid
-function isValidRequest($referrer)
-{
-  if(isset($_GET["code"]))
-  {
-    switch($referrer)
-    {
-      case "reddit":
-        return isRedditCode($_GET["code"]);
-      
-      case "google":
-        return isGoogleCode($_GET["code"]);
-      
-      case "facebook":
-        return isFacebookCode($_GET["code"]);
-        
-      case "github":
-        return isGitHubCode($_GET["code"]);
-    }
-  }
-  
-  return false;
 }
 
 // Returns true, if referrer and session id is valid for POST

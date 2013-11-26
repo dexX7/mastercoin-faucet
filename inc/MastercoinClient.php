@@ -38,17 +38,22 @@ class MastercoinClient
     $signedtx = $this->rpc->signRawTransaction($transaction->toHex());
     $txid = $this->rpc->sendRawTransaction($signedtx);
     
-    if($txid)
+    if($txid == false)
     {
-      // Update balance
-      $this->updateBalance($transaction, $txid);
-      
-      // Push via other channels
-      $this->pushToBlockchainInfo($signedtx);
-      $this->pushToEligius($signedtx);      
+      return false;
     }
-   
-    return $txid;
+    
+    // Set id
+    $transaction->setId($txid);
+              
+    // Push via other channels
+    $this->pushToBlockchainInfo($signedtx);
+    $this->pushToEligius($signedtx); 
+    
+    // Update balance
+    $this->updateBalance($transaction);
+
+    return $transaction;
   }
   
   public function pushToBlockchainInfo($rawtx)
@@ -121,11 +126,12 @@ class MastercoinClient
     return $result;
   }
   
-  private function updateBalance($transaction, $txid)
+  private function updateBalance($transaction)
   {
     $address = $transaction->input["address"];
     $mastercoin = $transaction->input["mastercoin"];
     $testcoin = $transaction->input["testcoin"];
+    $txid = $transaction->getId();
     
     if($transaction->currency == 1)
     {

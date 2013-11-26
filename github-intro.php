@@ -3,16 +3,13 @@
 <!-- GitHub intro -->
 
 <?php
-  require_once("inc/config.php");
   require_once("inc/security.php");  
   require_once("inc/GitHubConnector.php");
   
   $uid = generateUid();
-  
-  registerReferrer("github");
   registerUid($uid);
   
-  $connector = new GitHubConnector($gitClientId, $gitClientSecret, $gitRedirectUrl);
+  $connector = new GitHubConnector();
   $url = $connector->getAuthUrl($uid);
 ?>
 

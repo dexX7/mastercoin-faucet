@@ -3,16 +3,13 @@
 <!-- Facebook intro -->
 
 <?php
-  require_once("inc/config.php");
   require_once("inc/security.php");  
-  require_once("inc/FacebookConnector.php");
+  require_once("inc/FacebookConnector.php");  
   
   $uid = generateUid();
-  
-  registerReferrer("facebook");
   registerUid($uid);
-        
-  $connector = new FacebookConnector($facebookClientId, $facebookClientSecret, $facebookRedirectUrl);
+  
+  $connector = new FacebookConnector();
   $url = $connector->getAuthUrl($uid);
 ?>
 

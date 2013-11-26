@@ -48,7 +48,8 @@ if($validsession)
         // Output/funds available?
         if($transaction)
         {
-          $txid = $mastercoinclient->pushTransaction($transaction);          
+          $transaction = $mastercoinclient->pushTransaction($transaction);
+          $txid = $transaction->getId();
           
           // Tx successful pushed?
           if($txid)

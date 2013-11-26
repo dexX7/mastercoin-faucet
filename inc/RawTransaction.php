@@ -8,7 +8,7 @@ class RawTransaction
   private $count_outputs = 0;
   private $inputs = "";
   private $outputs = "";
-  
+  private $txid = false;  
   private $outputamount = 0.0;
 
   public function addInput($txid, $vout)
@@ -38,40 +38,14 @@ class RawTransaction
     return $this->outputamount;
   }
   
-  // tx type 0: simple send, curr id 1: msc, 2: test msc
-  public function buildDataAddr($toaddr, $currency, $amount)
+  public function setId($id)
   {
-    $decoded = base58check_decode($toaddr);
-    $seqnum = hexdec(bin2hex($decoded[1])) - 1;
-    if($seqnum < 0)
-    {
-        $seqnum = $seqnum + 256;
-    }
-    $datahex = dechex($seqnum); // seqence number
-    $datahex = $datahex . $this->int32ToHexLittle(0); // tx type
-    $datahex = $datahex . $this->int32ToHexLittle($currency); // currency id
-    $datahex = $datahex . $this->int64ToHexLittle($amount); // amount
-    $datahex = $datahex . "000000";
-    $encoded = base58check_encode(hex2bin($datahex));
-    return $encoded;
+    $this->txid = $id;
   }
-
-  public function buildEncodedPubKey($fromaddr, $currency, $amount)
+  
+  public function getId()
   {
-    $amount = $this->toSatoshi($amount);
-    $pubkey = "01"; // seq num
-    $pubkey = $pubkey . $this->int32ToHexLittle(0); // tx type, simple send
-    $pubkey = $pubkey . $this->int32ToHexLittle($currency); // currency id
-    $pubkey = $pubkey . $this->int64ToHexLittle($amount); // amount
-    $pubkey = $pubkey . "0000000000000000000000000000"; // padding
-    
-    $encodedpubkey = $this->encryptMastercoinPacket($fromaddr, 1, $pubkey);
-    $encodedpubkey = "02" . $encodedpubkey . "00";
-    
-    $rbyte = dechex(rand(0, 255));
-    $encodedpubkey = substr($encodedpubkey, 0, 64) . $rbyte;
-    
-    return $encodedpubkey;
+    return $this->txid;
   }
   
   public function toHex()
@@ -85,17 +59,17 @@ class RawTransaction
     return $txhex;
   }
   
-  private function getVinCountStr()
+  protected function getVinCountStr()
   {
     return str_pad($this->count_inputs, 2, "0", STR_PAD_LEFT);
   }
   
-  private function getVoutCountStr()
+  protected function getVoutCountStr()
   {
     return str_pad($this->count_outputs, 2, "0", STR_PAD_LEFT);
   }
   
-  private function buildInput($txid, $vout)
+  protected function buildInput($txid, $vout)
   {
     $txhex = $this->txIdToHex($txid); // tx id
     $txhex = $txhex . $this->int32ToHex($vout); // vout
@@ -104,20 +78,20 @@ class RawTransaction
     return $txhex;
   }
   
-  private function buildSimpleOutput($address, $amount)
+  protected function buildSimpleOutput($address, $amount)
   {
     $txhex = $this->int64ToHex($amount); // amount
     $txhex = $txhex . "19"; // PUSH_NEXT
     $txhex = $txhex . "76"; // OP_DUP
     $txhex = $txhex . "a9"; // OP_HASH160
     $txhex = $txhex . "14"; // bytes to push
-    $txhex = $txhex . $this->addressToPubKey($address); // bytes to push
+    $txhex = $txhex . $this->addressToRipemd160($address); // RIPEMD-160
     $txhex = $txhex . "88"; // OP_EQUALVERIFY
     $txhex = $txhex . "ac"; // OP_CHECKSIG
     return $txhex;
-  }
+  } 
   
-  private function buildMultiSigOutput($pubkey1, $pubkey2, $amount)
+  protected function buildMultiSigOutput($pubkey1, $pubkey2, $amount)
   {
     $txhex = $this->int64ToHex($amount); // amount
     $txhex = $txhex . "47"; // PUSH_NEXT
@@ -131,28 +105,7 @@ class RawTransaction
     return $txhex;
   }
   
-  private function encryptMastercoinPacket($fromaddr, $seqnum, $pubkeyhex)
-  {
-    $obfuscated = "";
-    $shahash = $fromaddr;
-    
-    for($i = 1; $i <= $seqnum; $i++)
-    {
-      $shahash = hash('sha256', $shahash);
-    }
-    
-    for($a = 0; $a <= 60; $a = $a + 2)
-    {
-      $byte1 = pack("H*", substr($shahash, $a, 2));
-      $byte2 = pack("H*", substr($pubkeyhex, $a, 2));
-      $xorhex = bin2hex($byte1 ^ $byte2);
-      $obfuscated = $obfuscated . $xorhex;
-    }
-	
-    return $obfuscated;
-  }
-
-  private function txIdToHex($txid)
+  protected function txIdToHex($txid)
   {
     $txhash = "";
     for($i = 0; $i < strlen($txid); $i = $i + 2)
@@ -162,12 +115,12 @@ class RawTransaction
     return $txhash;
   }
   
-  private function addressToPubKey($address)
+  protected function addressToRipemd160($address)
   {
     return bin2hex(substr(base58check_decode($address), 1, 20));
   }
   
-  private function int32ToHex($amount)
+  protected function int32ToHex($amount)
   {
     $hex = dechex($amount);
     $hex = str_pad($hex, 8, "0", STR_PAD_LEFT);
@@ -175,7 +128,7 @@ class RawTransaction
     return $hex;
   }
   
-  private function int32ToHexLittle($amount)
+  protected function int32ToHexLittle($amount)
   {
     $hex = dechex($amount);
     $hex = str_pad($hex, 8, "0", STR_PAD_LEFT);
@@ -190,14 +143,14 @@ class RawTransaction
     return $hex;
   }
   
-  private function int64ToHexLittle($amount)
+  protected function int64ToHexLittle($amount)
   {
     $hex = dechex($amount);
     $hex = str_pad($hex, 16, "0", STR_PAD_LEFT);
     return $hex;
   }
   
-  private function toSatoshi($amount)
+  protected function toSatoshi($amount)
   {
     return $amount * 100000000;
   }

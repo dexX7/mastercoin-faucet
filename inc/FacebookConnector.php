@@ -1,104 +1,42 @@
 <?php
 
-// PHP-OAuth2, https://github.com/adoy/PHP-OAuth2
-require_once("inc/Client.php");
-require_once("inc/GrantType/IGrantType.php");
-require_once("inc/GrantType/AuthorizationCode.php");
+require_once("inc/config.php");
+require_once("inc/OAuthConnector.php");
 
-class FacebookConnector
+class FacebookConnector extends OAuthConnector
 {
-  private $authorizeUrl = "https://www.facebook.com/dialog/oauth";
-  private $accessTokenUrl = "https://graph.facebook.com/oauth/access_token";
-  
-  private $clientId = "";
-  private $clientSecret = "";
-  private $redirectUrl = "";
-  private $client = null;
-  private $authenticated = false;  
-  
-  // Initializes OAuth2 client
-  public function __construct($id, $secret, $redirect)
+  public function __construct()
   {
-    $this->clientId = $id;
-    $this->clientSecret = $secret;
-    $this->redirectUrl = $redirect;
-    
-    $this->client = new OAuth2\Client($this->clientId, $this->clientSecret, OAuth2\Client::AUTH_TYPE_AUTHORIZATION_BASIC);
+    global $facebookClientId, $facebookClientSecret, $facebookRedirectUrl;
+    parent::__construct(array(
+        "clientId" => $facebookClientId,
+        "clientSecret" => $facebookClientSecret,
+        "redirectUrl" => $facebookRedirectUrl,
+        "authType" => 1, // AUTH_TYPE_AUTHORIZATION_BASIC
+        "authorizeUrl" => "https://www.facebook.com/dialog/oauth",
+        "accessTokenUrl" => "https://graph.facebook.com/oauth/access_token"        
+    ));
   }
   
-  // Creates OAuth authentication URL
-  public function getAuthUrl($state = "", $scope = "")
-  {
-    $params = array("scope" => $scope, "state" => $state);
-    
-    return $this->client->getAuthenticationUrl($this->authorizeUrl, $this->redirectUrl, $params);
+  public function getAuthUrl($state)
+  {    
+    $params = array("state" => $state);
+    return $this->createAuthUrl($params);
   }
-  
-  // Establishes OAuth connection, returns false, if failed
-  public function authenticate($code)
-  {
-    $params = array("code" => $code, "redirect_uri" => $this->redirectUrl);
-    
-    try
-    {
-      $response = $this->client->getAccessToken($this->accessTokenUrl, "authorization_code", $params);
-    }
-    catch (Exception $e)
-    {
-      return false;
-    }
-    
-    if($response["code"] != 200)
-    {
-      return false;
-    }
-    
-    $accessTokenResult = array();
-    parse_str($response["result"], $accessTokenResult);    
-    
-    if(isset($accessTokenResult["error"]))
-    {
-      return false;
-    }    
-    
-    $this->client->setAccessToken($accessTokenResult["access_token"]);
-    $this->client->setAccessTokenType(OAuth2\Client::ACCESS_TOKEN_BEARER);
-    
-    $this->authenticated = true;
-    
-    return $this->client;
-  }
-  
-  // Returns user object or false, if failed
+
   public function getUserDetails()
   {
-    if($this->isAuthenticated() == false)
-    {
-      return false;
-    }
-    
-    try
-    {
-      $response = $this->client->fetch("https://graph.facebook.com/me");
-    }
-    catch (Exception $e)
-    {
-      return false;
-    }
-    
-    if($response["code"] != 200)
-    {
-      return false;
-    }
-    
-    return $response["result"];
+    $url = "https://graph.facebook.com/me";
+    return $this->makeRequest($url);
   }
-  
-  // Returns true, if OAuth connection is established
-  public function isAuthenticated()
+
+  // Returns true, if input is a valid Facebook code
+  protected function isCode($input)
   {
-    return $this->authenticated;
+    $pattern = "/^[a-zA-Z0-9_-]{323}$/";
+    return preg_match($pattern, $input);
   }
+
 }
 
 ?>

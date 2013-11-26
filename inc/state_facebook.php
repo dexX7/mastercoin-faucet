@@ -7,28 +7,20 @@ require_once("inc/FacebookConnector.php");
 require_once("inc/SqlConnector.php");
 
 $referrer = "facebook";
-$validsession = isValidSession($referrer);
-$validrequest = isValidRequest($referrer);
-        
-// Cleanup session
-unregisterReferrer();
-unregisterUid();
+$connector = new FacebookConnector();
       
 // Results: valid, alreadyclaimed, sessionerror, error
 $result = "STATE_ERROR";      
 
-// Session id and referrer valid?
-if($validsession)
+// Session and state valid?
+if($connector->validateSession())
 {
-  // Code valid?
-  if($validrequest)
+  // Authentication successful?
+  if($connector->authenticate())
   {
-    $connector = new FacebookConnector($facebookClientId, $facebookClientSecret, $facebookRedirectUrl);
-    $connector->authenticate($_GET["code"]);
-    
     $user = $connector->getUserDetails();
     
-    // OAuth authentication successful and user exists?
+    // Request successful and user exists?
     if($user)
     {
       $name = $user["first_name"];

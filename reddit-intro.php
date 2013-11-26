@@ -3,16 +3,13 @@
 <!-- Reddit intro -->
 
 <?php
-  require_once("inc/config.php");
   require_once("inc/security.php");  
   require_once("inc/RedditConnector.php");
   
   $uid = generateUid();
-  
-  registerReferrer("reddit");
   registerUid($uid);
   
-  $connector = new RedditConnector($redditClientId, $redditClientSecret, $redditRedirectUrl);
+  $connector = new RedditConnector();
   $url = $connector->getAuthUrl($uid);
 ?>
 

@@ -3,16 +3,13 @@
 <!-- Google intro -->
 
 <?php
-  require_once("inc/config.php");
   require_once("inc/security.php");  
   require_once("inc/GoogleConnector.php");
   
   $uid = generateUid();
-  
-  registerReferrer("google");
   registerUid($uid);
   
-  $connector = new GoogleConnector($googleClientId, $googleClientSecret, $googleRedirectUrl);
+  $connector = new GoogleConnector();
   $url = $connector->getAuthUrl($uid);
 ?>
 

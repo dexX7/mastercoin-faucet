@@ -7,28 +7,20 @@ require_once("inc/GoogleConnector.php");
 require_once("inc/SqlConnector.php");
 
 $referrer = "google";
-$validsession = isValidSession($referrer);
-$validrequest = isValidRequest($referrer);
+$connector = new GoogleConnector();
 
-// Cleanup session
-unregisterReferrer();
-unregisterUid();
-      
 // Results: valid, alreadyclaimed, sessionerror, error
-$result = "STATE_ERROR";      
-        
-// Session id and referrer valid?
-if($validsession)
+$result = "STATE_ERROR";
+
+// Session and state valid?
+if($connector->validateSession())
 {
-  // Code valid?
-  if($validrequest)
+  // Authentication successful?
+  if($connector->authenticate())
   {
-    $connector = new GoogleConnector($googleClientId, $googleClientSecret, $googleRedirectUrl);
-    $connector->authenticate($_GET["code"]);
-    
     $user = $connector->getUserDetails();
     
-    // OAuth authentication successful and user exists?
+    // Request successful and user exists?
     if($user)
     {
       $name = $user["given_name"];

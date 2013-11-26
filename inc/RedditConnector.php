@@ -1,103 +1,42 @@
 <?php
 
-// PHP-OAuth2, https://github.com/adoy/PHP-OAuth2
-require_once("inc/Client.php");
-require_once("inc/GrantType/IGrantType.php");
-require_once("inc/GrantType/AuthorizationCode.php");
+require_once("inc/config.php");
+require_once("inc/OAuthConnector.php");
 
-class RedditConnector
+class RedditConnector extends OAuthConnector
 {
-  private $authorizeUrl = "https://ssl.reddit.com/api/v1/authorize";
-  private $accessTokenUrl = "https://ssl.reddit.com/api/v1/access_token";
-  
-  private $clientId = "";
-  private $clientSecret = "";
-  private $redirectUrl = "";
-  private $client = null;
-  private $authenticated = false;  
-  
-  // Initializes OAuth2 client
-  public function __construct($id, $secret, $redirect)
+  public function __construct()
   {
-    $this->clientId = $id;
-    $this->clientSecret = $secret;
-    $this->redirectUrl = $redirect;
-    
-    $this->client = new OAuth2\Client($this->clientId, $this->clientSecret, OAuth2\Client::AUTH_TYPE_AUTHORIZATION_BASIC);
+    global $redditClientId, $redditClientSecret, $redditRedirectUrl;
+    parent::__construct(array(
+        "clientId" => $redditClientId,
+        "clientSecret" => $redditClientSecret,
+        "redirectUrl" => $redditRedirectUrl,
+        "authType" => 1, // AUTH_TYPE_AUTHORIZATION_BASIC
+        "authorizeUrl" => "https://ssl.reddit.com/api/v1/authorize",
+        "accessTokenUrl" => "https://ssl.reddit.com/api/v1/access_token"        
+    ));
   }
-  
-  // Creates OAuth authentication URL
-  public function getAuthUrl($state = "", $scope = "identity")
-  {
-    $params = array("scope" => $scope, "state" => $state);
-    
-    return $this->client->getAuthenticationUrl($this->authorizeUrl, $this->redirectUrl, $params);
+
+  public function getAuthUrl($state)
+  {    
+    $params = array("scope" => "identity", "state" => $state);
+    return $this->createAuthUrl($params);
   }
-  
-  // Establishes OAuth connection, returns false, if failed
-  public function authenticate($code)
-  {
-    $params = array("code" => $code, "redirect_uri" => $this->redirectUrl);
-    
-    try
-    {
-      $response = $this->client->getAccessToken($this->accessTokenUrl, "authorization_code", $params);
-    }
-    catch (Exception $e)
-    {
-      return false;
-    }
-        
-    if($response["code"] != 200)
-    {
-      return false;
-    }
-    
-    $accessTokenResult = $response["result"];
-    
-    if(isset($accessTokenResult["error"]))
-    {
-      return false;
-    }
-    
-    $this->client->setAccessToken($accessTokenResult["access_token"]);
-    $this->client->setAccessTokenType(OAuth2\Client::ACCESS_TOKEN_BEARER);
-    
-    $this->authenticated = true;
-    
-    return $this->client;
-  }
-  
-  // Returns user object or false, if failed
+
   public function getUserDetails()
   {
-    if($this->isAuthenticated() == false)
-    {
-      return false;
-    }
-    
-    try
-    {
-      $response = $this->client->fetch("https://oauth.reddit.com/api/v1/me");
-    }
-    catch (Exception $e)
-    {
-      return false;
-    }
-    
-    if($response["code"] != 200)
-    {
-      return false;
-    }
-    
-    return $response["result"];
+    $url = "https://oauth.reddit.com/api/v1/me";
+    return $this->makeRequest($url);
   }
-  
-  // Returns true, if OAuth connection is established
-  public function isAuthenticated()
+
+  // Returns true, if input is a valid Reddit code
+  protected function isCode($input)
   {
-    return $this->authenticated;
-  }  
+    $pattern = "/^[a-zA-Z0-9_-]{27}$/";
+    return preg_match($pattern, $input);
+  }
+
 }
 
 ?>

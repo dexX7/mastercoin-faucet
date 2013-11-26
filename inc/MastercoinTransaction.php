@@ -37,7 +37,7 @@ class MastercoinTransaction extends RawTransaction
   public function getCost()
   {
     return $this->getOutputAmount() - $this->getChange();
-  }
+  }  
   
   private function createClassB()
   {
@@ -56,7 +56,64 @@ class MastercoinTransaction extends RawTransaction
     {
       $this->addSimpleOutput($this->input["address"], floatval($this->getChange()));
     }
-  }  
+  }
+  
+  private function encryptMastercoinPacket($fromaddr, $seqnum, $pubkeyhex)
+  {
+    $obfuscated = "";
+    $shahash = $fromaddr;
+    
+    for($i = 1; $i <= $seqnum; $i++)
+    {
+      $shahash = hash("sha256", $shahash);
+    }
+    
+    for($a = 0; $a <= 60; $a = $a + 2)
+    {
+      $byte1 = pack("H*", substr($shahash, $a, 2));
+      $byte2 = pack("H*", substr($pubkeyhex, $a, 2));
+      $xorhex = bin2hex($byte1 ^ $byte2);
+      $obfuscated = $obfuscated . $xorhex;
+    }
+	
+    return $obfuscated;
+  }
+  
+  // tx type 0: simple send, curr id 1: msc, 2: test msc
+  public function buildDataAddr($toaddr, $currency, $amount)
+  {
+    $decoded = base58check_decode($toaddr);
+    $seqnum = hexdec(bin2hex($decoded[1])) - 1;
+    if($seqnum < 0)
+    {
+        $seqnum = $seqnum + 256;
+    }
+    $datahex = dechex($seqnum); // seqence number
+    $datahex = $datahex . $this->int32ToHexLittle(0); // tx type
+    $datahex = $datahex . $this->int32ToHexLittle($currency); // currency id
+    $datahex = $datahex . $this->int64ToHexLittle($amount); // amount
+    $datahex = $datahex . "000000";
+    $encoded = base58check_encode(hex2bin($datahex));
+    return $encoded;
+  }
+
+  public function buildEncodedPubKey($fromaddr, $currency, $amount)
+  {
+    $amount = $this->toSatoshi($amount);
+    $pubkey = "01"; // seq num
+    $pubkey = $pubkey . $this->int32ToHexLittle(0); // tx type, simple send
+    $pubkey = $pubkey . $this->int32ToHexLittle($currency); // currency id
+    $pubkey = $pubkey . $this->int64ToHexLittle($amount); // amount
+    $pubkey = $pubkey . "0000000000000000000000000000"; // padding
+    
+    $encodedpubkey = $this->encryptMastercoinPacket($fromaddr, 1, $pubkey);
+    $encodedpubkey = "02" . $encodedpubkey . "00";
+    
+    $rbyte = dechex(rand(0, 255));
+    $encodedpubkey = substr($encodedpubkey, 0, 64) . $rbyte;
+    
+    return $encodedpubkey;
+  }
 }
 
 ?>

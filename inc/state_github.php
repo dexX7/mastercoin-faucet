@@ -7,29 +7,21 @@ require_once("inc/GitHubConnector.php");
 require_once("inc/SqlConnector.php");
 
 $referrer = "github";
-$validsession = isValidSession($referrer);
-$validrequest = isValidRequest($referrer);
-
-// Cleanup session
-unregisterReferrer();
-unregisterUid();
+$connector = new GitHubConnector();
       
-// Results: valid, notqualified, alreadyclaimed, error
-$result = "STATE_ERROR";
-  
-// Session id and referrer valid?
-if($validsession)
+// Results: valid, alreadyclaimed, sessionerror, error
+$result = "STATE_ERROR";      
+
+// Session and state valid?
+if($connector->validateSession())
 {
-  // Code valid?
-  if($validrequest)
+  // Authentication successful?
+  if($connector->authenticate())
   {
-    $connector = new GitHubConnector($gitClientId, $gitClientSecret, $gitRedirectUrl);
-    $connector->authenticate($_GET["code"]);
-    
     $user = $connector->getUserDetails();
     $repos = $connector->getRepos();
     
-    // OAuth authentication successful and user exists?
+    // Request successful and user exists?
     if($user)
     {
       $username = $user["login"];
@@ -74,6 +66,10 @@ if($validsession)
       }
     }
   }
+}
+else
+{
+  $result = "STATE_SESSION_ERROR";
 }
 
 ?>

@@ -486,12 +486,19 @@ class Client
         if ($curl_error = curl_error($ch)) {
             throw new Exception($curl_error, Exception::CURL_ERROR);
         } else {
-            $json_decode = json_decode($result, true);
+            // Modified/added by dexx@bitwatch.co on 2013-11-23
+            $result_decoded = json_decode($result, true);            
+            if(null === $result_decoded)
+            {
+              $result_decoded = array();
+              parse_str($result, $result_decoded);
+            }
         }
         curl_close($ch);
 
         return array(
-            'result' => (null === $json_decode) ? $result : $json_decode,
+            // Modified/added by dexx@bitwatch.co on 2013-11-23
+            'result' => (empty($result_decoded)) ? $result : $result_decoded,
             'code' => $http_code,
             'content_type' => $content_type
         );

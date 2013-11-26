@@ -157,6 +157,48 @@ class SqlConnector {
     return $obj;
   }
   
+  // Returns reward details
+  public function lookupRewardById($claimid)
+  {
+    // Is connection established?
+    if($this->hasFailed())
+    {
+      return false;
+    }
+    
+    $cleanid = $this->link->escape_string($claimid);
+    
+    $query = "SELECT method, user, timestamp, amount, txid FROM claims WHERE fclaimid LIKE '{$cleanid}'";
+    $result = $this->link->query($query);
+    
+    $obj = $result->fetch_object();
+    $result->free();
+    
+    return $obj;
+  }
+  
+  
+  // Returns reward details
+  public function lookupRewardByIp()
+  {
+    // Is connection established?
+    if($this->hasFailed())
+    {
+      return false;
+    }
+    
+    $ip = getenv('REMOTE_ADDR');
+    $cleanip = $this->link->escape_string($ip);
+    
+    $query = "SELECT method, user, timestamp, amount, txid FROM claims WHERE ip LIKE '{$cleanip}'";
+    $result = $this->link->query($query);
+    
+    $obj = $result->fetch_object();
+    $result->free();
+    
+    return $obj;
+  }
+  
   // Sums all payouts to calculate the total spent
   public function getBalanace($currency)
   {
@@ -176,7 +218,7 @@ class SqlConnector {
     
     return $obj;
   }
-  
+
   // Returns true, if there was a connection error
   public function hasFailed()
   {

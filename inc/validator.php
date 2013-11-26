@@ -46,7 +46,7 @@ function isQualifiedGitHub($user, $repos)
   {
     return false;
   }
-  
+
   $date_cutoff = strtotime("2013-08-01 00:00:00");
   
   $specials = array("pymastercoin", "mastercoin-ruby", "mastercoin-explorer",

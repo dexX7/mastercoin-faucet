@@ -7,28 +7,20 @@ require_once("inc/RedditConnector.php");
 require_once("inc/SqlConnector.php");
 
 $referrer = "reddit";
-$validsession = isValidSession($referrer);
-$validrequest = isValidRequest($referrer);
-
-// Cleanup session
-unregisterReferrer();
-unregisterUid();
+$connector = new RedditConnector();
       
-// Results: valid, notqualified, alreadyclaimed, sessionerror, error
-$result = "STATE_ERROR";
-  
-// Session id and referrer valid?
-if($validsession)
+// Results: valid, alreadyclaimed, sessionerror, error
+$result = "STATE_ERROR";      
+
+// Session and state valid?
+if($connector->validateSession())
 {
-  // Code valid?
-  if($validrequest)
+  // Authentication successful?
+  if($connector->authenticate())
   {
-    $connector = new RedditConnector($redditClientId, $redditClientSecret, $redditRedirectUrl);
-    $connector->authenticate($_GET["code"]);
-    
     $user = $connector->getUserDetails();
     
-    // OAuth authentication successful and user exists?
+    // Request successful and user exists?
     if($user)
     {
       $username = $user["name"];
