@@ -95,7 +95,9 @@ class SqlConnector {
     $query = "UPDATE wallets SET mastercoin = '{$mastercoin}', testcoin = '{$testcoin}', lastuse = '{$timestamp}',
               txid = '{$txid}' WHERE address LIKE '{$address}'";
     
-    return $this->link->query($query);
+    $result = $this->link->query($query);
+    
+    return $result;
   }
   
   // Stores successful transaction
@@ -128,7 +130,9 @@ class SqlConnector {
               VALUES ('{$cleanid}', '{$cleanmethod}', '{$cleanuser}', '{$timestamp}', '{$cleancurrency}', '{$cleanamount}', 
               '{$cleantxid}', '{$cleanbtc}', '{$cleanmsc}', '{$cleantest}', '{$cleanip}', '{$cleanagent}')";
               
-    return $this->link->query($query);
+    $result = $this->link->query($query);
+    
+    return $result;
   }
   
   // Returns reward details

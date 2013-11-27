@@ -49,6 +49,7 @@
           </ul>
           -->
           <ul class="nav navbar-nav navbar-right">
+            <li><a href="/resources">Resources</a></li>
             <li class="active"><a href="/about">About</a></li>
             <!-- 
             <li><a href="../navbar-static-top/">About</a></li>

@@ -52,7 +52,7 @@ class MastercoinClient
     
     // Update balance
     $this->updateBalance($transaction);
-
+    
     return $transaction;
   }
   

@@ -61,7 +61,7 @@ if($validsession)
             // Store transaction
             $storedtx = $sql->storeTransaction($request->formid, $request->method, $request->user, $curtype, $amount, 
                                                $txid, $change, $balancemastercoin, $balancetestcoin);
-                                               
+        
             // Store cookie
             storeCookie($request->formid);
             

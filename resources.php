@@ -1,9 +1,3 @@
-<?php
-error_reporting(0);
-date_default_timezone_set('UTC');
-session_start();
-require_once("inc/balance.php");
-?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -28,12 +22,12 @@ require_once("inc/balance.php");
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
   </head>
-  
+    
   <body>
-  
+    
   <!-- Wrap all page content here -->
   <div id="wrap">
-  
+    
     <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top">
       <div class="container">
@@ -55,7 +49,7 @@ require_once("inc/balance.php");
           </ul>
           -->
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/resources">Resources</a></li>
+            <li class="active"><a href="/resources">Resources</a></li>
             <li><a href="/about">About</a></li>
             <!-- 
             <li><a href="../navbar-static-top/">About</a></li>
@@ -69,8 +63,45 @@ require_once("inc/balance.php");
     <!-- Begin page content -->
     <div class="container">
       <div class="page-header">
-        <h1>The Mastercoin faucet (test stage)</h1>
-        <p class="lead">Earn up to $0.5 worth of free Mastercoin, we already gave out 
-        <?php echo getMastercoinTotal(); ?></p>
+        <h1>Mastercoin resources</h1>
       </div>
       
+    <!-- Resources -->
+    <h4><strong>What is Mastercoin?</strong></h4>
+    <span class="description">
+      <p>Mastercoin is an open source project driven by the members of the Bitcoin community that want to see 
+      more advanced features implemented on top of the blockchain.</p>
+      <p>Mastercoin enables the Bitcoin eco-system to become more decentralized and operate more in line with 
+      its peer to peer nature. History has shown that when a digital service has a single point of failure it 
+      will be attacked and taken down. Mastercoin removes many of today's bottle necks, that are preventing 
+      the wide spread use of Bitcoin.</p>
+    </span>
+    <br />
+    
+    <h4><strong>More resources</strong></h4>
+    <span class="description">
+      <p>Main website<br />
+      <a href="http://www.mastercoin.org">http://www.mastercoin.org</a></p>
+      
+      <p>Reddit<br />
+      <a href="http://www.reddit.com/r/mastercoin">http://www.reddit.com/r/mastercoin</a></p>      
+      
+      <p>Main thread on bitcointalk.org<br />
+      <a href="https://bitcointalk.org/index.php?topic=265488.0">
+      https://bitcointalk.org/index.php?topic=265488.0</a></p>
+      
+      <p>Mastercoin specification<br />
+      <a href="https://github.com/mastercoin-MSC/spec">https://github.com/mastercoin-MSC/spec</a></p>
+      
+      <p>Mastercoin Wiki & FAQ<br />
+      <a href="http://wiki.mastercoin.org/index.php?title=FAQ">http://wiki.mastercoin.org/index.php?title=FAQ</a></p>
+            
+      <p>Thread for buying and selling Mastercoins<br />
+      <a href="https://bitcointalk.org/index.php?topic=287145.0">https://bitcointalk.org/index.php?topic=287145.0</a></p>
+            
+      <p>The 300 BTC coding contest<br />
+      <a href="https://bitcointalk.org/index.php?topic=292628.0">https://bitcointalk.org/index.php?topic=292628.0</a></p>
+    </span>
+    <!-- /Resources -->
+    
+    <?php include("footer.php"); ?>
