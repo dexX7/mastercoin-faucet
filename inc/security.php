@@ -66,25 +66,6 @@ function hasValidReferrer($referrer)
   return $isValid;
 }
 
-// Returns true, if session is valid
-function hasValidUid()
-{
-  $validState =
-    isset($_GET["state"]) && isUid($_GET["state"]);
-    
-  $validSession =
-    isset($_SESSION["state"]) && isUid($_SESSION["state"]);
-  
-  if($validState && $validSession)
-  {
-    return $_SESSION["state"] == $_GET["state"];
-  }
-  else
-  {
-    return false;
-  }
-}
-
 // Returns true, if session is valid for POST
 function hasValidPostUid()
 {
@@ -128,6 +109,51 @@ function isValidPostRequest($referrer)
       return hasValidBitcointalkData();
   }
   
+  return false;
+}
+
+function encryptMessage($message, $key)
+{
+  try
+  {
+    return base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($key), $message, MCRYPT_MODE_CBC, md5(md5($key))));
+  }
+  catch(Exception $e)
+  {
+    return false;
+  }
+}
+
+function decryptMessage($encrypted, $key)
+{
+  try
+  {
+    return rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), base64_decode($encrypted), MCRYPT_MODE_CBC, md5(md5($key))), "\0");
+  }
+  catch(Exception $e)
+  {
+    return false;
+  }
+}
+
+function storeCookie($input)
+{
+  $encrypted = encryptMessage($input, $key);
+  setcookie("MSSEC", $encrypted, strtotime( '+1 year' ), "/", "mastercoin-faucet.com", false, true);
+}
+
+function cookieExists()
+{
+  return isset($_COOKIE["MSSEC"]);
+}
+
+function retrieveCookie()
+{
+  if(isset($_COOKIE["MSSEC"]))
+  {
+    $encrypted = $_COOKIE["MSSEC"];
+    return decryptMessage($encrypted, $key);
+  }
   return false;
 }
 

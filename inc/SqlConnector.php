@@ -157,6 +157,27 @@ class SqlConnector {
     return $obj;
   }
   
+  // Returns reward details based on IP
+  public function rewardClaimedByHost()
+  {
+    // Is connection established?
+    if($this->hasFailed())
+    {
+      return false;
+    }
+    
+    $ip = getenv('REMOTE_ADDR');
+    $cleanip = $this->link->escape_string($ip);
+    
+    $query = "SELECT ip FROM claims WHERE ip LIKE '{$cleanip}'";
+    $result = $this->link->query($query);
+    
+    $count = $result->num_rows;    
+    $result->free();
+    
+    return $count;
+  }
+    
   // Returns reward details
   public function lookupRewardById($claimid)
   {

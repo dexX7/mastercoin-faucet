@@ -26,7 +26,13 @@ $rpcPort = "";
 $rpcUsername = "";
 $rpcPassword = "";
 
+$checkCookie = true;
+$checkHost = true;
+
+$key = "";
+
 $curtype = 2; // 1: MSC, 2: Test MSC
-$amount = 0.0001; // Amount MSC to send
+$amount = 0.0005; // Amount MSC to send
+$amountPremium = 0.0025; // Amount MSC to send
 
 ?>

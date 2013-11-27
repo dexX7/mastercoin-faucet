@@ -25,7 +25,7 @@
     visit the <a href="https://bitcointalk.org/index.php?topic=321358.0" target="_blank">developer thread</a> on 
     bitcointalk.org. Feel free to test crazy stuff! :p</strong></p>
     <p>To unlock a reward, choose one of the following authentication methods. The authentication steps and requirements are 
-    intended to prevent abuse, because our goal is to reach as many interested people as possible.</p>
+    intended to prevent abuse, because our goal is to reach as many interested people as possible. Only one reward per person.</p>
   </span>
   
   <ul>

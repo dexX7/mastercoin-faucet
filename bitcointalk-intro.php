@@ -3,7 +3,29 @@
 <!-- Bitcointalk intro -->
 
 <?php
+  require_once("inc/config.php");
   require_once("inc/security.php");
+  require_once("inc/SqlConnector.php");
+  
+  // Check, if Cookie check is enabled
+  if($checkCookie)
+  {
+    if(cookieExists())
+    {
+      // TODO: Retrieve claim id and store in some kind of abuse DB?
+      header("Location: /already-claimed");
+    }
+  }
+  
+  // Check, if IP check is enabled
+  if($checkHost)
+  {
+    $sql = new SqlConnector($sqlHost, $sqlUsername, $sqlPassword, $sqlDatabase);
+    if($sql->rewardClaimedByHost() != 0)
+    {
+      header("Location: /already-claimed");
+    }
+  }
   
   $uid = generateUid();
   
