@@ -48,7 +48,7 @@ class MastercoinClient
               
     // Push via other channels
     $this->pushToBlockchainInfo($signedtx);
-    $this->pushToEligius($signedtx); 
+    $this->pushToEligius($signedtx);
     
     // Update balance
     $this->updateBalance($transaction);
@@ -74,14 +74,14 @@ class MastercoinClient
   
   public function getBestOutput($currency, $amount)
   {
-    $minfee = 0.0001;
-    $minamount = 0.0000546;
+    $minfee = floatval(0.0001);
+    $minamount = floatval(0.0000546);
     
-    $minbitcoin = (4 * $minamount) + $minfee;    
-    $minmastercoin = ($currency == 1) ? $amount : 0.0;
-    $mintestcoin = ($currency == 2) ? $amount : 0.0;
+    $minbitcoin = floatval((floatval(4) * floatval($minamount)) + floatval($minfee));
+    $minmastercoin = ($currency == 1) ? floatval($amount) : floatval(0.0);
+    $mintestcoin = ($currency == 2) ? floatval($amount) : floatval(0.0);
     
-    $unspentoutputs = $this->getUnspentOutputsWith($minbitcoin, $minmastercoin, $mintestcoin);
+    $unspentoutputs = $this->getUnspentOutputsWith(floatval($minbitcoin), floatval($minmastercoin), floatval($mintestcoin));
     
     return reset($unspentoutputs);
   }
@@ -93,7 +93,7 @@ class MastercoinClient
     $filterbalanace =
       function($var) use ($minbitcoin, $minmastercoin, $mintestcoin)
       {
-        $bitcoin = $var["amount"];
+        $bitcoin = floatval($var["amount"]);
         $mastercoin = floatval($var["mastercoin"]);
         $testcoin  = floatval($var["testcoin"]);
         
@@ -129,20 +129,20 @@ class MastercoinClient
   private function updateBalance($transaction)
   {
     $address = $transaction->input["address"];
-    $mastercoin = $transaction->input["mastercoin"];
-    $testcoin = $transaction->input["testcoin"];
+    $mastercoin = floatval($transaction->input["mastercoin"]);
+    $testcoin = floatval($transaction->input["testcoin"]);
     $txid = $transaction->getId();
     
     if($transaction->currency == 1)
     {
-      $mastercoin -= $transaction->amount;
+      $mastercoin -= floatval($transaction->amount);
     }
     else if($transaction->currency == 2)
     {
-      $testcoin -= $transaction->amount;
+      $testcoin -= floatval($transaction->amount);
     }
     
-    return $this->sql->updateWallet($address, $mastercoin, $testcoin, $txid);
+    return $this->sql->updateWallet($address, floatval($mastercoin), floatval($testcoin), $txid);
   }
 }
 

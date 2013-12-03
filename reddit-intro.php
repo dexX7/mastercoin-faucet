@@ -5,15 +5,17 @@
 <?php
   require_once("inc/config.php");
   require_once("inc/security.php");
-  require_once("inc/SqlConnector.php");
+  require_once("inc/balance.php");
+  require_once("inc/RewardManager.php");
   require_once("inc/RedditConnector.php");
+  require_once("inc/Debug.php");
   
   // Check, if Cookie check is enabled
   if($checkCookie)
   {
     if(cookieExists())
     {
-      // TODO: Retrieve claim id and store in some kind of abuse DB?
+      Debug::Log("Cookie exists, TXID: ".retrieveCookie());
       header("Location: /already-claimed");
     }
   }
@@ -21,9 +23,10 @@
   // Check, if IP check is enabled
   if($checkHost)
   {
-    $sql = new SqlConnector($sqlHost, $sqlUsername, $sqlPassword, $sqlDatabase);
-    if($sql->rewardClaimedByHost() != 0)
+    $sql = new RewardManager();
+    if($sql->countRewardsByIp() != 0)
     {
+      Debug::Log("IP already claimed a reward");
       header("Location: /already-claimed");
     }
   }
@@ -36,8 +39,9 @@
 ?>
 
   <span class="description">
-    <p>Great, you chose <strong>Reddit</strong> as authentication method. You can earn <strong>0.0001 Test 
-    Mastercoin</strong> with this method, but you need more than <strong>100 karma</strong> to be rewarded.</p>
+    <p>Great, you chose <strong>Reddit</strong> as authentication method. You can earn <strong><?php echo 
+    getAmountLabelLong("github"); ?></strong> with this method, but you need more than <strong>100 
+    karma</strong> to be rewarded.</p>
     
     <p>If you go on, you will be forwarded to <strong>Reddit</strong>. There you need to grant access to an 
     application called <strong>Mastercoin faucet</strong>. You will be redirected to this page, after you finished 

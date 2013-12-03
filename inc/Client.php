@@ -335,6 +335,8 @@ class Client
     public function fetch($protected_resource_url, $parameters = array(), $http_method = self::HTTP_METHOD_GET, 
 	                      array $http_headers = array(), $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART)
     {
+        // Added by faucet@bitwatch.co on 2013-11-27
+        $http_headers['User-Agent'] = 'Mastercoin faucet';
         if ($this->access_token) {
             switch ($this->access_token_type) {
                 case self::ACCESS_TOKEN_URI:

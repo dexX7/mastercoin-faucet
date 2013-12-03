@@ -5,15 +5,17 @@
 <?php
   require_once("inc/config.php");
   require_once("inc/security.php");
-  require_once("inc/SqlConnector.php");
+  require_once("inc/balance.php");
+  require_once("inc/RewardManager.php");
   require_once("inc/GitHubConnector.php");
+  require_once("inc/Debug.php");
   
   // Check, if Cookie check is enabled
   if($checkCookie)
   {
     if(cookieExists())
     {
-      // TODO: Retrieve claim id and store in some kind of abuse DB?
+      Debug::Log("Cookie exists, TXID: ".retrieveCookie());
       header("Location: /already-claimed");
     }
   }
@@ -21,9 +23,10 @@
   // Check, if IP check is enabled
   if($checkHost)
   {
-    $sql = new SqlConnector($sqlHost, $sqlUsername, $sqlPassword, $sqlDatabase);
-    if($sql->rewardClaimedByHost() != 0)
+    $sql = new RewardManager();
+    if($sql->countRewardsByIp() != 0)
     {
+      Debug::Log("IP already claimed a reward");
       header("Location: /already-claimed");
     }
   }
@@ -36,8 +39,8 @@
 ?>
 
   <span class="description">
-    <p>Nice, you chose <strong>GitHub</strong> as authentication method. You can earn <strong>0.0001 Test 
-    Mastercoin</strong> with this method.</p>
+    <p>Nice, you chose <strong>GitHub</strong> as authentication method. You can earn <strong><?php echo 
+    getAmountLabelLong("github"); ?></strong> with this method.</p>
     
     <p>You need either at least <strong>three public repositories</strong> and your account must be <strong>
     older than August 1, 2013</strong> or you are starred on one of the 

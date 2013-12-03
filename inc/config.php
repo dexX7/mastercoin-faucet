@@ -28,10 +28,12 @@ $rpcPassword = "";
 
 $checkCookie = true;
 $checkHost = true;
+$checkAuthMethod = true;
+$checkAddress = true;
 
 $key = "";
 
-$curtype = 2; // 1: MSC, 2: Test MSC
+$curtype = 1; // 1: MSC, 2: Test MSC
 $amount = 0.0005; // Amount MSC to send
 $amountPremium = 0.0025; // Amount MSC to send
 

@@ -5,15 +5,15 @@ tiny amounts of Mastercoin, primarily to play around a little.
 
 Project status
 =================
-5/5 authentication methods are implemented. Payout system that
+Five authentication methods are implemented. Payout system that
 uses raw transactions and finds fitting unspent outputs. MSC 
-balanace needs to be synced manually.
+balanaces need to be synced manually the first time. Attempts
+to claim multiple rewards are not allowed.
 
 To do
 =================
 - Replace signature based bitcointalk.org authentication with
   one-time-token string authentication
-- Detect redemption of multiple rewards
 - DB and code cleanup and optimization
 
 Used compontents

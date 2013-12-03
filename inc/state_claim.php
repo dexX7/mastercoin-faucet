@@ -3,8 +3,9 @@
 require_once("inc/config.php");
 require_once("inc/security.php");
 require_once("inc/verifymessage.php");
-require_once("inc/SqlConnector.php");
+require_once("inc/RewardManager.php");
 require_once("inc/MastercoinClient.php");
+require_once("inc/Debug.php");
 
 $validsession = hasValidPostUid();
 
@@ -17,8 +18,8 @@ $result = "STATE_ERROR";
 // Session and form id valid?
 if($validsession)
 {
-  $sql = new SqlConnector($sqlHost, $sqlUsername, $sqlPassword, $sqlDatabase);
-  $request = $sql->retrieveRequest($_POST["state"]);
+  $rewardmanager = new RewardManager();
+  $request = $rewardmanager->retrieveRequest($_POST["state"]);
   
   // Is there a claim registred?
   if($request)
@@ -39,9 +40,22 @@ if($validsession)
       
       // Valid Bitcoin address?
       if($validaddress)
-      {
+      {      
+        // Check, if address check is enabled
+        if($checkAddress)
+        {          
+          if($rewardmanager->lookupRewardByAddress($address))
+          {
+            Debug::Log("Address already used, address: ".$address);
+            header("Location: /already-claimed");
+          }
+        }
+      
         $mastercoinclient = new MastercoinClient();
         
+        // Determine amount
+        $amount = getAmount($request->method);
+                
         // Create transaction
         $transaction = $mastercoinclient->createSimpleSend($address, $curtype, $amount);
         
@@ -54,16 +68,11 @@ if($validsession)
           // Tx successful pushed?
           if($txid)
           {
-            $change = $transaction->getCost();
-            $balancemastercoin = 0.0;
-            $balancetestcoin = $amount;
+            // Store tx
+            $storedtx = $rewardmanager->storeReward($transaction, $request->requestid);
             
-            // Store transaction
-            $storedtx = $sql->storeTransaction($request->formid, $request->method, $request->user, $curtype, $amount, 
-                                               $txid, $change, $balancemastercoin, $balancetestcoin);
-        
-            // Store cookie
-            storeCookie($request->formid);
+            // Set cookie
+            storeCookie($txid);
             
             // Everything is fine
             $result = "STATE_VALID";

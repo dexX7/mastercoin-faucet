@@ -19,23 +19,23 @@ class RawTransaction
   
   public function addSimpleOutput($address, $amount)
   {
-    $this->outputamount += $amount;
-    $amount = $this->toSatoshi($amount);
+    $this->outputamount += floatval($amount);
+    $amount = $this->toSatoshi(floatval($amount));
     $this->count_outputs++;
     $this->outputs = $this->outputs . $this->buildSimpleOutput($address, $amount);
   }
   
   public function addMultiSignOutput($pubkey1, $pubkey2, $amount)
   {
-    $this->outputamount += $amount;
-    $amount = $this->toSatoshi($amount);
+    $this->outputamount += floatval($amount);
+    $amount = $this->toSatoshi(floatval($amount));
     $this->count_outputs++;
     $this->outputs = $this->outputs . $this->buildMultiSigOutput($pubkey1, $pubkey2, $amount);
   }
   
   public function getOutputAmount()
   {
-    return $this->outputamount;
+    return floatval($this->outputamount);
   }
   
   public function setId($id)

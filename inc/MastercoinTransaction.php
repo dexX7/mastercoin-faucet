@@ -21,27 +21,27 @@ class MastercoinTransaction extends RawTransaction
   
   public function getChange()
   {
-    $minfee = 0.0001;
-    $minamount = 0.0000546;
-    $mintotal = (4 * $minamount) + $minfee;
-    $change = floatval($this->input["amount"]) - $mintotal;
+    $minfee = floatval(0.0001);
+    $minamount = floatval(0.0000546);
+    $mintotal = floatval((floatval(4) * floatval($minamount)) + floatval($minfee));
+    $change = floatval(floatval($this->input["amount"]) - floatval($mintotal));
     
-    return ($change > $minamount) ? $change : 0.0;
+    return ($change > $minamount) ? floatval($change) : floatval(0.0);
   }
 
   public function getFee()
   {
-    return $this->input["amount"] - $this->getOutputAmount();
+    return floatval(floatval($this->input["amount"]) - floatval($this->getOutputAmount()));
   }
   
   public function getCost()
   {
-    return $this->getOutputAmount() - $this->getChange();
+    return floatval(floatval($this->getOutputAmount()) - floatval($this->getChange()));
   }  
   
   private function createClassB()
   {
-    $minamount = 0.0000546;
+    $minamount = floatval(0.0000546);
     $exodus = "1EXoDusjGwvnjZUyKkxZ4UHEf77z6A5S4P";
     
     $encodedPubKey = $this->buildEncodedPubKey($this->input["address"], $this->currency, floatval($this->amount));
@@ -50,9 +50,9 @@ class MastercoinTransaction extends RawTransaction
     $this->addInput($this->input["txid"], $this->input["vout"]);
     $this->addSimpleOutput($this->toaddress, floatval($minamount));
     $this->addSimpleOutput($exodus, floatval($minamount));
-    $this->addMultiSignOutput($this->input["pubkey"], $encodedPubKey, floatval(2 * $minamount));
+    $this->addMultiSignOutput($this->input["pubkey"], $encodedPubKey, floatval(floatval(2) * floatval($minamount)));
         
-    if($this->getChange() >= $minamount)
+    if(floatval($this->getChange()) >= floatval($minamount))
     {
       $this->addSimpleOutput($this->input["address"], floatval($this->getChange()));
     }
@@ -99,7 +99,7 @@ class MastercoinTransaction extends RawTransaction
 
   public function buildEncodedPubKey($fromaddr, $currency, $amount)
   {
-    $amount = $this->toSatoshi($amount);
+    $amount = $this->toSatoshi(floatval($amount));
     $pubkey = "01"; // seq num
     $pubkey = $pubkey . $this->int32ToHexLittle(0); // tx type, simple send
     $pubkey = $pubkey . $this->int32ToHexLittle($currency); // currency id

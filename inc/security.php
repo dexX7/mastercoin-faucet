@@ -1,7 +1,8 @@
 <?php
 
 // Generates a random 64 long char id
-function generateUid() {
+function generateUid()
+{
   $uid = uniqid(md5(mt_rand()), true);
   $formid = hash("sha256", $uid);
   return $formid;
@@ -116,7 +117,8 @@ function encryptMessage($message, $key)
 {
   try
   {
-    return base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($key), $message, MCRYPT_MODE_CBC, md5(md5($key))));
+    return base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($key), 
+    $message, MCRYPT_MODE_CBC, md5(md5($key))));
   }
   catch(Exception $e)
   {
@@ -128,7 +130,8 @@ function decryptMessage($encrypted, $key)
 {
   try
   {
-    return rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), base64_decode($encrypted), MCRYPT_MODE_CBC, md5(md5($key))), "\0");
+    return rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), 
+    base64_decode($encrypted), MCRYPT_MODE_CBC, md5(md5($key))), "\0");
   }
   catch(Exception $e)
   {
@@ -138,13 +141,18 @@ function decryptMessage($encrypted, $key)
 
 function storeCookie($input)
 {
-  $encrypted = encryptMessage($input, $key);
-  setcookie("MSSEC", $encrypted, strtotime( '+1 year' ), "/", "mastercoin-faucet.com", false, true);
+  $encrypted = "mf".encryptMessage($input, $key);
+  setcookie("MSSEC", $encrypted, strtotime( '+1 year' ), "/", 
+  "mastercoin-faucet.com", false, true);
 }
 
 function cookieExists()
 {
-  return isset($_COOKIE["MSSEC"]);
+  if(isset($_COOKIE["MSSEC"]))
+  {
+    return (strpos($_COOKIE["MSSEC"], "mf") === 0);
+  }
+  return false;
 }
 
 function retrieveCookie()
@@ -152,6 +160,10 @@ function retrieveCookie()
   if(isset($_COOKIE["MSSEC"]))
   {
     $encrypted = $_COOKIE["MSSEC"];
+    if(strpos($encrypted, "mf") === 0)
+    {
+      $encrypted = substr($encrypted, 2);
+    }
     return decryptMessage($encrypted, $key);
   }
   return false;

@@ -5,14 +5,16 @@
 <?php
   require_once("inc/config.php");
   require_once("inc/security.php");
-  require_once("inc/SqlConnector.php");
+  require_once("inc/balance.php");
+  require_once("inc/RewardManager.php");
+  require_once("inc/Debug.php");
   
   // Check, if Cookie check is enabled
   if($checkCookie)
   {
     if(cookieExists())
     {
-      // TODO: Retrieve claim id and store in some kind of abuse DB?
+      Debug::Log("Cookie exists, TXID: ".retrieveCookie());
       header("Location: /already-claimed");
     }
   }
@@ -20,9 +22,10 @@
   // Check, if IP check is enabled
   if($checkHost)
   {
-    $sql = new SqlConnector($sqlHost, $sqlUsername, $sqlPassword, $sqlDatabase);
-    if($sql->rewardClaimedByHost() != 0)
+    $sql = new RewardManager();
+    if($sql->countRewardsByIp() != 0)
     {
+      Debug::Log("IP already claimed a reward");
       header("Location: /already-claimed");
     }
   }
@@ -34,10 +37,10 @@
 ?>
 
   <span class="description">
-    <p>Awesome, you chose authentication via <strong>bitcointalk.org</strong>. You can earn <strong>0.0001 Test 
-    Mastercoin</strong> with this method, but you need an <strong>activity score above 10</strong> as well as 
-    <strong>at least 10 posts</strong> and furthermore your account must be <strong>created before August 1, 
-    2013</strong>.</p>
+    <p>Awesome, you chose authentication via <strong>bitcointalk.org</strong>. You can earn <strong><?php echo 
+    getAmountLabelLong("github"); ?></strong> with this method, but you need an <strong>activity score above 
+    10</strong> as well as <strong>at least 10 posts</strong> and furthermore your account must be 
+    <strong>created before August 1, 2013</strong>.</p>
     
     <p>Here comes the tricky part, you need to do three things to claim the reward. At first, you have to find 
     a link to your <strong>user profile</strong>. Paste the link to your profile in the <strong>first box</strong> 

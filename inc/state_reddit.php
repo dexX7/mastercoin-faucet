@@ -4,7 +4,7 @@ require_once("inc/config.php");
 require_once("inc/security.php");  
 require_once("inc/validator.php");
 require_once("inc/RedditConnector.php");
-require_once("inc/SqlConnector.php");
+require_once("inc/RewardManager.php");
 
 $referrer = "reddit";
 $connector = new RedditConnector();
@@ -31,26 +31,22 @@ if($connector->validateSession())
       // Is user qualified for a reward?
       if(isQualifiedReddit($user))
       {
-        $sql = new SqlConnector($sqlHost, $sqlUsername, $sqlPassword, $sqlDatabase);            
-        $reward = $sql->lookupReward($identifier, $referrer);
+        $rewardmanager = new RewardManager();
+        $reward = $rewardmanager->lookupRewardByUser($identifier, $referrer);
         
-        // User already rewarded?
-        if($reward == false)
+        // User already rewarded or authentication method check disabled?
+        if($reward == null || $checkAuthMethod == false)
         {
-          // Last query successful?
-          if($sql->wasSuccess())
+          $formid = generateUid();
+          $registred = $rewardmanager->registerRequest($formid, $identifier, $referrer, $username);;
+          
+          // Last query successful and claim registred?
+          if($registred)
           {
-            $formid = generateUid();
-            $registred = $sql->registerFormId($formid, $identifier, $referrer, $username);
+            // Register new session id
+            registerUid($formid);
             
-            // Last query successful and claim registred?
-            if($registred)
-            {
-              // Register new session id
-              registerUid($formid);
-              
-              $result = "STATE_VALID";
-            }
+            $result = "STATE_VALID";
           }
         }
         else

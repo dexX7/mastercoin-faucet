@@ -85,18 +85,18 @@ class SqlConnector {
   public function updateWallet($address, $mastercoin, $testcoin, $txid)
   {
     $timestamp = date("Y-m-d H:i:s");
-    
+
     $address = $this->link->escape_string($address);
     $mastercoin = $this->link->escape_string($mastercoin);
     $testcoin = $this->link->escape_string($testcoin);
     $timestamp = $this->link->escape_string($timestamp);
     $txid = $this->link->escape_string($txid);    
-    
+
     $query = "UPDATE wallets SET mastercoin = '{$mastercoin}', testcoin = '{$testcoin}', lastuse = '{$timestamp}',
               txid = '{$txid}' WHERE address LIKE '{$address}'";
-    
+
     $result = $this->link->query($query);
-    
+
     return $result;
   }
   

@@ -8,20 +8,22 @@
   <?php if($result == "STATE_VALID") { ?>
   
     <div class="alert alert-success">
-      <strong>Gratulations!</strong> We just sent you <?php echo $amount; ?> Test Mastercoin.
+      <strong>Gratulations!</strong> We just sent you <?php echo $amount; ?> <?php if ($curtype == 2) echo "Test "; ?>Mastercoin.
     </div>
     
     <span class="description">
-      <p>The <strong>transaction id</strong> is <?php echo $txid; ?>.</p>
+      <p>The <strong>transaction id</strong> is <strong><?php echo $txid; ?></strong>.</p>
       <p>It may take a few minutes, but you can lookup the transaction for your 
       reward and all details on:</p>
     </span>
     
     <ul>
-      <li><a href="http://masterchain.info/simplesend.html?currency=TMSC&tx=<?php echo $txid; ?>" target="_blank">
-      <strong>masterchain.info</strong></a></li>
+      <li><a href="http://mastercoin-explorer.com/transactions/<?php echo $txid; ?>" target="_blank">
+      <strong>mastercoin-explorer.com</strong></a></li>
       <li><a href="https://masterchest.info/lookuptx.aspx?txid=<?php echo $txid; ?>" target="_blank">
       <strong>masterchest.info</strong></a></li>
+      <li><a href="http://masterchain.info/simplesend.html?currency=<?php if ($curtype == 2) echo "T"; ?>MSC&tx=<?php echo $txid; ?>" target="_blank">
+      <strong>masterchain.info</strong></a></li>
       <li><a href="https://blockchain.info/tx/<?php echo $txid; ?>" target="_blank">
       <strong>blockchain.info</strong></a></li>
     </ul>

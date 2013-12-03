@@ -3,7 +3,7 @@
   
   <div id="footer">
     <div class="container">
-      <p class="text-muted credit">Mastercoin faucet made by <a href="https://bitcointalk.org">bitcointalk.org</a> 
+      <p class="text-muted credit">The Mastercoin faucet was created by <a href="https://bitcointalk.org">bitcointalk.org</a> 
       user <a href="https://bitcointalk.org/index.php?action=profile;u=104899">dexX7</a></p>
     </div>
   </div>

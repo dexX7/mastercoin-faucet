@@ -91,10 +91,12 @@
     </span>
     
     <ul>
-      <li><a href="http://masterchain.info/simplesend.html?currency=TMSC&tx=<?php echo $txid; ?>" target="_blank">
-      <strong>masterchain.info</strong></a></li>
+      <li><a href="http://mastercoin-explorer.com/transactions/<?php echo $txid; ?>" target="_blank">
+      <strong>mastercoin-explorer.com</strong></a></li>
       <li><a href="https://masterchest.info/lookuptx.aspx?txid=<?php echo $txid; ?>" target="_blank">
       <strong>masterchest.info</strong></a></li>
+      <li><a href="http://masterchain.info/simplesend.html?currency=<?php if ($curtype == 2) echo "T"; ?>MSC&tx=<?php echo $txid; ?>" target="_blank">
+      <strong>masterchain.info</strong></a></li>
       <li><a href="https://blockchain.info/tx/<?php echo $txid; ?>" target="_blank">
       <strong>blockchain.info</strong></a></li>
     </ul>
