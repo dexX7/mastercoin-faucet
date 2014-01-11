@@ -30,7 +30,6 @@ class GoogleConnector extends OAuthConnector
     return $this->makeRequest($url);
   }
 
-  // Returns true, if input is a valid Google code
   protected function isCode($input)
   {
     $pattern = "/^4\/[a-zA-Z0-9_-]{28}\.[a-zA-Z0-9_-]{31}$/";

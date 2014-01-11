@@ -1,27 +1,22 @@
 <?php
   include("header.php");
-  include("inc/state_reddit.php");
+  include("inc/state_twitter.php");
 ?>
 
-<!-- Reddit callback -->
+<!-- Twitter callback -->
 
   <?php if($result == "STATE_VALID") { ?>
   
     <div class="alert alert-success">
-      <strong>Well done!</strong> Welcome back from <strong>Reddit</strong>, <?php echo $username; ?>.
+      <strong>Well done!</strong> Welcome back from <strong>Twitter</strong>, <?php echo $username; ?>.
     </div>
     
     <div class="description">
-      <p>You have <strong><?php echo $linkkarma; ?> link karma</strong> and <strong><?php echo $commentkarma; ?> 
-      comment karma</strong>.</p>      
-      <p>And therefore you are <strong>qualified</strong> for this reward. :)</p>
-      <p>Don't forget to check out <a href="http://www.reddit.com/r/mastercoin" target="_blank"><strong>
-      /r/mastercoin</strong></a> later.</p>
+      <p>You are <strong>qualified</strong> for this reward. :)</p>
     </div>
     
     <br />
-    <p>Please enter your <strong>Mastercoin address</strong> and click <strong>submit</strong> to claim your 
-    bounty:</p>
+    <p>Please enter your <strong>Mastercoin address</strong> and click <strong>submit</strong> to claim your bounty:</p>
     
     <form class="navbar-form navbar-left" role="form" action="/claim" method="post">
       <div class="form-group">
@@ -42,13 +37,10 @@
     </div>
     
     <div class="description">
-      <p>You have <strong><?php echo $linkkarma; ?> link karma</strong> and <strong><?php echo $commentkarma; ?> 
-      comment karma</strong>.</p>
-      <p>And therefore you are <strong>not qualified</strong> for this reward, you need at least 
-      <strong>100 karma</strong>. :(</p>
+      <p>You are <strong>not qualified</strong>.</p>
+      <p>To claim the reward, your Twitter account must be older than <strong>August 1, 2013</strong>. :(</p>
       <p>This requirement serves as protection against abuse, so we are able to give out as much free MCS as 
       possible.</p>
-      <p>Please understand our position and we hope you <strong>come back</strong> later when you gained enough.</p>
     </div>
     
     <br /><br /><br />
@@ -92,8 +84,8 @@
     <div class="description">
       <p>There are several reasons why you might see this.</p>
       <p>Did you refresh this page or are your cookies disabled?</p>
-      <p>You can <a href="/reddit-intro"><strong>click here</strong></a> to start the authentication via 
-      <strong>Reddit</strong> again.</p>
+      <p>You can <a href="/twitter-intro"><strong>click here</strong></a> to start the authentication via 
+      <strong>Twitter</strong> again.</p>
       <p>If you think there shouldn't be an error, please contact us via <a href="mailto:faucet@bitwatch.co">
       <strong>email</strong></a>.</p>
     </div>
@@ -104,13 +96,13 @@
   <?php } else { ?>
   
     <div class="alert alert-danger">
-      <strong>Oh noes!</strong> The authentication via Reddit failed.. :(
+      <strong>Oh noes!</strong> The authentication via Twitter failed.. :(
     </div>
     
     <div class="description">
       <p>Did you decline the authorisation?</p>
-      <p>You can <a href="/reddit-intro"><strong>click here</strong></a> to start the authentication via 
-      <strong>Reddit</strong> again.</p>
+      <p>You can <a href="/twitter-intro"><strong>click here</strong></a> to start the authentication via 
+      <strong>Twitter</strong> again.</p>
       <p>If you think there shouldn't be an error, please contact us via <a href="mailto:faucet@bitwatch.co">
       <strong>email</strong></a>.</p>
     </div>
@@ -120,6 +112,6 @@
     
   <?php } ?>
   
-<!-- /Reddit callback -->
+<!-- /Twitter callback -->
 
 <?php include("footer.php"); ?>

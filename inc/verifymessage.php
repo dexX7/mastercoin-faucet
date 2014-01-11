@@ -99,8 +99,10 @@ function getVerifiedAddress160Bin($signature, $message)
   $isCompressed = ($recoveryFlags & 4) != 0;
   
   // hash message, recover key
-  $messageHash = hash('sha256', hash('sha256', "\x18Bitcoin Signed Message:\n" . numToVarIntString(strlen($message)).$message, true), true);
-  $pubkey = recoverPubKey(bin2gmp(substr($signature, 1, 32)), bin2gmp(substr($signature, 33, 32)), bin2gmp($messageHash), $recoveryFlags, $secp256k1_G);
+  $messageHash = hash('sha256', hash('sha256', "\x18Bitcoin Signed Message:\n" . 
+  numToVarIntString(strlen($message)).$message, true), true);
+  $pubkey = recoverPubKey(bin2gmp(substr($signature, 1, 32)), bin2gmp(substr($signature, 33, 32)), 
+  bin2gmp($messageHash), $recoveryFlags, $secp256k1_G);
   if($pubkey === false)
   {
     throw new InvalidArgumentException('Unable to recover key.');

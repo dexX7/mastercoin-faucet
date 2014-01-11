@@ -15,6 +15,9 @@ unregisterUid();
 // Results: valid, alreadyclaimed, invalidaddr, error, nomorefunds
 $result = "STATE_ERROR";
 
+// Temp storage for debug args
+$debugtmp = "";
+
 // Session and form id valid?
 if($validsession)
 {
@@ -24,11 +27,14 @@ if($validsession)
   // Is there a claim registred?
   if($request)
   {
+    // Debug info
+    $debugtmp .= ", REQUESTID: ".$request->requestid;
+  
     // Checks submitted address
     if(hasValidAddress())
     {
       $address = $_POST["address"];	  
-      
+            
       try
       {
         $validaddress = isValidBitcoinAddress($address);
@@ -40,53 +46,59 @@ if($validsession)
       
       // Valid Bitcoin address?
       if($validaddress)
-      {      
-        // Check, if address check is enabled
-        if($checkAddress)
-        {          
-          if($rewardmanager->lookupRewardByAddress($address))
-          {
-            Debug::Log("Address already used, address: ".$address);
-            header("Location: /already-claimed");
-          }
-        }
+      {
+        // Debug info
+        $debugtmp .= ", ADDRESS: ".$address;
       
-        $mastercoinclient = new MastercoinClient();
-        
-        // Determine amount
-        $amount = getAmount($request->method);
-                
-        // Create transaction
-        $transaction = $mastercoinclient->createSimpleSend($address, $curtype, $amount);
-        
-        // Output/funds available?
-        if($transaction)
+        // Go on, if address check is disabled or address was not used before
+        if($checkAddress == false
+            || $rewardmanager->lookupRewardByAddress($address) == false)
         {
-          $transaction = $mastercoinclient->pushTransaction($transaction);
-          $txid = $transaction->getId();
+          $mastercoinclient = new MastercoinClient();
           
-          // Tx successful pushed?
-          if($txid)
+          // Determine amount
+          $amount = getAmount($request->method);
+          
+          // Debug info
+          $debugtmp .= ", AMOUNT: ".$amount;
+                  
+          // Create transaction
+          $transaction = $mastercoinclient->createSimpleSend($address, $curtype, $amount);
+          
+          // Output/funds available?
+          if($transaction)
           {
-            // Store tx
-            $storedtx = $rewardmanager->storeReward($transaction, $request->requestid);
+            $transaction = $mastercoinclient->pushTransaction($transaction);
+            $txid = $transaction->getId();
             
-            // Set cookie
-            storeCookie($txid);
-            
-            // Everything is fine
-            $result = "STATE_VALID";
+            // Tx successful pushed?
+            if($txid)
+            {
+              // Store tx
+              $storedtx = $rewardmanager->storeReward($transaction, $request->requestid);
+              
+              // Set cookie
+              storeCookie($txid);
+              
+              // Everything is fine
+              $result = "STATE_VALID";
+            }
+            else
+            {
+              // Couldn't connect to rpc server or tx sign failed
+              $result = "STATE_TRANSACTION_ERROR";
+            }
           }
           else
           {
-            // Couldn't connect to rpc server or tx sign failed
-            $result = "STATE_TRANSACTION_ERROR";
+            // There are not enough funds available
+            $result = "STATE_NO_MORE_FUNDS";
           }
         }
         else
         {
-          // There are not enough funds available
-          $result = "STATE_NO_MORE_FUNDS";
+          // This address already claimed a reward
+          $result = "STATE_ALREADY_CLAIMED";
         }
       }
       else
@@ -111,6 +123,11 @@ else
 {
   // Session is invalid
   $result = "STATE_SESSION_ERROR";
+}
+
+if($result != "STATE_VALID")
+{
+  Debug::Log("state_claim.php, STATE: ".$result.$debugtmp);
 }
 
 ?>

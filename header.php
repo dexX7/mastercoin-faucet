@@ -1,6 +1,6 @@
 <?php
 error_reporting(0);
-date_default_timezone_set('UTC');
+date_default_timezone_set("UTC");
 session_start();
 require_once("inc/balance.php");
 ?>
@@ -8,13 +8,14 @@ require_once("inc/balance.php");
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Earn free MSC on the Mastercoin faucet">
+    <meta name="description" content="The Mastercoin faucet rewards users with small amounts of Mastercoin and allows 
+    users to get more familiar with this additional protocol layer.">
     <meta name="author" content="dexX7">
     <link rel="shortcut icon" href="ico/favicon.png">
     
-    <title>Mastercoin Faucet</title>
+    <title>Mastercoin Faucet - Earn free MSC with the Mastercoin faucet</title>
     
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -43,24 +44,14 @@ require_once("inc/balance.php");
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a href="/"><img src="img/logo.png" style="margin-top: 10px; height: 28px;"></a>
-          <!-- <a class="navbar-brand" href="#">Mastercoin faucet</a> -->
+          <a href="/" title="Go back to the frontpage of the Mastercoin faucet">
+          <img src="img/logo.png" style="margin-top: 10px; height: 28px;" alt="The Mastercoin faucet" 
+          title="Go back to the frontpage of the Mastercoin faucet"></a>
         </div>
         <div class="navbar-collapse collapse">
-          <!-- 
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-          -->
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/resources">Resources</a></li>
-            <li><a href="/about">About</a></li>
-            <!-- 
-            <li><a href="../navbar-static-top/">About</a></li>
-            <li><a href="./">Contact</a></li>
-            -->
+            <li><a href="/resources" title="Learn more about Mastercoin">Mastercoin?</a></li>
+            <li><a href="/about" title="What is the Mastercoin faucet?">About</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

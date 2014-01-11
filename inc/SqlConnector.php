@@ -125,10 +125,11 @@ class SqlConnector {
     $cleanagent = $this->link->escape_string($agent);
     $timestamp = date("Y-m-d H:i:s");
       
-    $query = "INSERT INTO claims (fclaimid, method, user, timestamp, currency, amount, txid, bitcoin, mastercoin, testcoin,
-              ip, agent) 
-              VALUES ('{$cleanid}', '{$cleanmethod}', '{$cleanuser}', '{$timestamp}', '{$cleancurrency}', '{$cleanamount}', 
-              '{$cleantxid}', '{$cleanbtc}', '{$cleanmsc}', '{$cleantest}', '{$cleanip}', '{$cleanagent}')";
+    $query = "INSERT INTO claims (fclaimid, method, user, timestamp, currency, amount, txid, bitcoin, mastercoin, 
+              testcoin, ip, agent) 
+              VALUES ('{$cleanid}', '{$cleanmethod}', '{$cleanuser}', '{$timestamp}', '{$cleancurrency}', 
+              '{$cleanamount}', '{$cleantxid}', '{$cleanbtc}', '{$cleanmsc}', '{$cleantest}', '{$cleanip}', 
+              '{$cleanagent}')";
               
     $result = $this->link->query($query);
     

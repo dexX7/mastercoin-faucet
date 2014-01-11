@@ -2,13 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Earn free MSC on the Mastercoin faucet">
+    <meta name="description" content="The Mastercoin faucet rewards users with small amounts of Mastercoin and allows 
+    users to get more familiar with this additional protocol layer.">
     <meta name="author" content="dexX7">
     <link rel="shortcut icon" href="ico/favicon.png">
     
-    <title>Mastercoin Faucet</title>
+    <title>Mastercoin Faucet - More information about the Mastercoin faucet</title>
     
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -36,25 +37,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </button>
-          <a href="/"><img src="img/logo.png" style="margin-top: 10px; height: 28px;"></a>
-          <!-- <a class="navbar-brand" href="#">Mastercoin faucet</a> -->
+          </button>          
+          <a href="/" title="Go back to the frontpage of the Mastercoin faucet">
+          <img src="img/logo.png" style="margin-top: 10px; height: 28px;" alt="The Mastercoin faucet" 
+          title="Go back to the frontpage of the Mastercoin faucet"></a>
         </div>
         <div class="navbar-collapse collapse">
-          <!-- 
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-          -->
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/resources">Resources</a></li>
-            <li class="active"><a href="/about">About</a></li>
-            <!-- 
-            <li><a href="../navbar-static-top/">About</a></li>
-            <li><a href="./">Contact</a></li>
-            -->
+            <li><a href="/resources" title="Learn more about Mastercoin">Mastercoin?</a></li>
+            <li class="active"><a href="/about" title="What is the Mastercoin faucet?">About</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -68,14 +59,14 @@
       
     <!-- About -->
     <h4><strong>What is the Mastercoin faucet?</strong></h4>
-    <span class="description">
-      <p>The Mastercoin faucet is a website on which users can earn tiny amounts of Mastercoin, primarily to play 
+    <div class="description">
+      <p>The Mastercoin faucet is a website on which users can earn small amounts of Mastercoin, primarily to play 
       around a little.</p>
-    </span>
+    </div>
     <br />
     
     <h4><strong>Used compontents:</strong></h4>
-    <span class="description">
+    <div class="description">
       <p>Bootstrap<br />
       <a href="http://getbootstrap.com">http://getbootstrap.com</a></p>
       
@@ -91,19 +82,24 @@
       
       <p>JSON-RPC PHP<br />
       <a href="http://jsonrpcphp.org">http://jsonrpcphp.org</a></p>
-    </span>
+      
+      <p>tmhOAuth<br />
+      <a href="https://github.com/themattharris/tmhOAuth">
+      https://github.com/themattharris/tmhOAuth</a></p>
+    </div>
     <br />
     
     <h4><strong>Who created this website?</strong></h4>
-    <span class="description">
+    <div class="description">
       <p>This website was created by <a href="https://bitcointalk.org">bitcointalk.org</a> user 
       <a href="https://bitcointalk.org/index.php?action=profile;u=104899">dexX7</a>.<br />
-      Bitcoin: <a href="bitcoin:1Bt2kePjGeM6LznEPbQ4xwpes99K2LCPwc">1Bt2kePjGeM6LznEPbQ4xwpes99K2LCPwc</a></p>
+      Bitcoin: 
+      <a href="bitcoin:1Bt2kePjGeM6LznEPbQ4xwpes99K2LCPwc" rel="nofollow">1Bt2kePjGeM6LznEPbQ4xwpes99K2LCPwc</a></p>
       <br />
-      <p>Mastercoin faucet is an open source project and hosted on GitHub:<br />
+      <p>The Mastercoin faucet is an open source project and hosted on GitHub:<br />
       <a href="https://github.com/dexX7/mastercoin-faucet">
       https://github.com/dexX7/mastercoin-faucet</a></p>
-    </span>
+    </div>
     <!-- /About -->
     
     <?php include("footer.php"); ?>

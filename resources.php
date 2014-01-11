@@ -2,13 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Earn free MSC on the Mastercoin faucet">
+    <meta name="description" content="Learn more about Mastercoin. Mastercoin is an open source project driven 
+    by the members of the Bitcoin community that want to see more advanced features implemented on top of the 
+    blockchain.">
     <meta name="author" content="dexX7">
     <link rel="shortcut icon" href="ico/favicon.png">
     
-    <title>Mastercoin Faucet</title>
+    <title>Mastercoin Faucet - Learn more about Mastercoin</title>
     
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -37,24 +39,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a href="/"><img src="img/logo.png" style="margin-top: 10px; height: 28px;"></a>
-          <!-- <a class="navbar-brand" href="#">Mastercoin faucet</a> -->
+          <a href="/" title="Go back to the frontpage of the Mastercoin faucet">
+          <img src="img/logo.png" style="margin-top: 10px; height: 28px;" alt="The Mastercoin faucet" 
+          title="Go back to the frontpage of the Mastercoin faucet"></a>
         </div>
         <div class="navbar-collapse collapse">
-          <!-- 
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-          -->
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="/resources">Resources</a></li>
-            <li><a href="/about">About</a></li>
-            <!-- 
-            <li><a href="../navbar-static-top/">About</a></li>
-            <li><a href="./">Contact</a></li>
-            -->
+            <li class="active"><a href="/resources" title="Learn more about Mastercoin">Mastercoin?</a></li>
+            <li><a href="/about" title="What is the Mastercoin faucet?">About</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -68,27 +60,29 @@
       
     <!-- Resources -->
     <h4><strong>What is Mastercoin?</strong></h4>
-    <span class="description">
-      <p>Mastercoin is an open source project driven by the members of the Bitcoin community that want to see 
-      more advanced features implemented on top of the blockchain.</p>
-      <p>Mastercoin enables the Bitcoin eco-system to become more decentralized and operate more in line with 
-      its peer to peer nature. History has shown that when a digital service has a single point of failure it 
-      will be attacked and taken down. Mastercoin removes many of today's bottle necks, that are preventing 
-      the wide spread use of Bitcoin.</p>
-    </span>
+    
+    <div class="description">
+      <p>Mastercoin is an <strong>open source</strong> project driven by the members of the <strong>Bitcoin community
+      </strong> that want to see more advanced features implemented on top of the <strong>blockchain</strong>.</p>
+      <p><strong>Mastercoin</strong> enables the Bitcoin eco-system to become <strong>more decentralized</strong> 
+      and operate more in line with its <strong>peer to peer nature</strong>. History has shown that when a <strong>
+      digital service</strong> has a single point of failure it will be attacked and taken down. Mastercoin removes 
+      many of today's bottle necks, that are preventing the <strong>wide spread use of Bitcoin</strong>.</p>
+    </div>
     <br />
     
     <h4><strong>More resources</strong></h4>
-    <span class="description">
+    
+    <div class="description">
       <p>Main website<br />
       <a href="http://www.mastercoin.org">http://www.mastercoin.org</a></p>
       
-      <p>Reddit<br />
-      <a href="http://www.reddit.com/r/mastercoin">http://www.reddit.com/r/mastercoin</a></p>      
-      
-      <p>Main thread on bitcointalk.org<br />
+      <p>Thread on bitcointalk.org<br />
       <a href="https://bitcointalk.org/index.php?topic=265488.0">
       https://bitcointalk.org/index.php?topic=265488.0</a></p>
+      
+      <p>Reddit<br />
+      <a href="http://www.reddit.com/r/mastercoin">http://www.reddit.com/r/mastercoin</a></p>
       
       <p>Mastercoin specification<br />
       <a href="https://github.com/mastercoin-MSC/spec">https://github.com/mastercoin-MSC/spec</a></p>
@@ -100,8 +94,15 @@
       <a href="https://bitcointalk.org/index.php?topic=287145.0">https://bitcointalk.org/index.php?topic=287145.0</a></p>
             
       <p>The 300 BTC coding contest<br />
-      <a href="https://bitcointalk.org/index.php?topic=292628.0">https://bitcointalk.org/index.php?topic=292628.0</a></p>
-    </span>
+      <a href="https://bitcointalk.org/index.php?topic=292628.0">https://bitcointalk.org/index.php?topic=292628.0</a></p>      
+      
+      <br />
+      <p>You may also like to check out Mastercoin on 
+      <a href="http://www.linkedin.com/groups/Mastercoin-6548214">Linkedin</a>, 
+      <a href="https://plus.google.com/communities/117331355001800275452">Google+</a>, 
+      <a href="https://twitter.com/mscprotocol">Twitter</a> or the Mastercoin group on 
+      <a href="https://www.facebook.com/groups/mastercoin/">Facebook</a>. :)</p>
+    </div>
     <!-- /Resources -->
     
     <?php include("footer.php"); ?>

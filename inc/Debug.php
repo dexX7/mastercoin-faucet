@@ -4,10 +4,7 @@ class Debug
 {
   public static function Log($message)
   {
-    $str = self::getPrefix().$message."\r\n";
-  
-    $file = "inc/log.txt";    
-    file_put_contents($file, $str, FILE_APPEND | LOCK_EX);
+    // ...
   }
   
   private static function getPrefix()  

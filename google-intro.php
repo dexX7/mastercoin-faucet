@@ -4,62 +4,41 @@
 
 <?php
   require_once("inc/config.php");
-  require_once("inc/security.php");
   require_once("inc/balance.php");
-  require_once("inc/RewardManager.php");
-  require_once("inc/GoogleConnector.php");
-  require_once("inc/Debug.php");
-  
-  // Check, if Cookie check is enabled
-  if($checkCookie)
-  {
-    if(cookieExists())
-    {
-      Debug::Log("Cookie exists, TXID: ".retrieveCookie());
-      header("Location: /already-claimed");
-    }
-  }
-  
-  // Check, if IP check is enabled
-  if($checkHost)
-  {
-    $sql = new RewardManager();
-    if($sql->countRewardsByIp() != 0)
-    {
-      Debug::Log("IP already claimed a reward");
-      header("Location: /already-claimed");
-    }
-  }
-  
-  $uid = generateUid();
-  registerUid($uid);
-  
-  $connector = new GoogleConnector();
-  $url = $connector->getAuthUrl($uid);
 ?>
 
-  <span class="description">
-    <p>Okay, you chose <strong>Google</strong> as authentication method. You can earn <strong><?php echo 
-    getAmountLabelLong("github"); ?></strong> with this method, if you have an Google account.</p>
+  <h3>Okay, you chose Google as authentication method!</h3>
+  <br />
+  
+  <div class="description">
+    <p>Receive <strong><?php echo getAmountLabelLong("google"); ?></strong> with this authentication.</p>
+    
+    <p>To <strong>redeem</strong> this reward, all you need is a Google account. Did you know 
+    that there is a there is an active Mastercoin <a href="https://plus.google.com/communities/117331355001800275452" 
+    target="_blank" title="Mastercoin on Google+"><strong>community on Google+</strong></a>?
     
     <p>You will be forwarded to <strong>Google</strong>. There you need to grant access to an application called 
     <strong>Mastercoin faucet</strong>. You will be redirected to this page, after you finished the process. You 
-    can revoke the application access later <a href="https://accounts.google.com/b/0/IssuedAuthSubTokens" target="_blank">
-    <strong>here</strong></a>. This step is solely a protection against abuse, so we are able to give out <strong>
-    free MCS</strong> to as many interested people as possible.</p>
+    can revoke the application access later <a href="https://accounts.google.com/b/0/IssuedAuthSubTokens" 
+    target="_blank" title="Revoke the application access on Google"><strong>here</strong></a>. This step is solely 
+    a protection against abuse, so we are able to give out <strong>free MCS</strong> to as many interested people 
+    as possible.</p>
     
-    <p>Please <a href="<?php echo $url; ?>"><strong>click here</strong></a> to initiate the 
-    <strong>authentication</strong>, if you like to proceed.</p>
-  </span>
+    <p><strong>Please note:<br />
+    Due to maintenance this authentication is currently not available. Please try again later.</strong></p>
+  </div>
   
   <div class="thumbnail">
     <div class="row">
-      <div class="col-sm-6"><img class="preview" src="img/authgoogle.png" alt="Google authentication" ></div>
-      <div class="col-sm-6"><img class="preview" src="img/authgoogledone.png" alt="Successful authentication"></div>
+      <div class="col-sm-6"><img class="preview" src="img/authgoogle.png" alt="An image of the Google authentication" 
+      title="This is how the authentication via Google looks like"></div>
+      <div class="col-sm-6"><img class="preview" src="img/authgoogledone.png" 
+      alt="An image of the successful authentication via Google" 
+      title="After the successful authentication you are redirected to the Mastercoin faucet"></div>
     </div>
   </div>
   
-  <p>Or <a href="/"><strong>go back</strong></a> instead.</p>
+  <p>Click here to <a href="/" title="Go back to the frontpage"><strong>go back</strong></a>.</p>
   
 <!-- /Google intro -->
 

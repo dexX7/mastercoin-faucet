@@ -26,7 +26,7 @@ function isPremium($authMethod)
        || $authMethod == "reddit");
 }
 
-// MAGIC NUMBERS are bad
+// MAGIC NUMBERS
 function modAmount($amount)
 {
   global $curtype;  

@@ -30,7 +30,6 @@ class RedditConnector extends OAuthConnector
     return $this->makeRequest($url);
   }
 
-  // Returns true, if input is a valid Reddit code
   protected function isCode($input)
   {
     $pattern = "/^[a-zA-Z0-9_-]{27}$/";

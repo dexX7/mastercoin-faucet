@@ -81,7 +81,8 @@ class MastercoinClient
     $minmastercoin = ($currency == 1) ? floatval($amount) : floatval(0.0);
     $mintestcoin = ($currency == 2) ? floatval($amount) : floatval(0.0);
     
-    $unspentoutputs = $this->getUnspentOutputsWith(floatval($minbitcoin), floatval($minmastercoin), floatval($mintestcoin));
+    $unspentoutputs
+        = $this->getUnspentOutputsWith(floatval($minbitcoin), floatval($minmastercoin), floatval($mintestcoin));
     
     return reset($unspentoutputs);
   }

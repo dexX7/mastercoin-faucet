@@ -1,0 +1,10 @@
+# robots.txt for http://mastercoin-faucet.com/
+User-agent: *
+Disallow: /reddit
+Disallow: /bitcointalk
+Disallow: /github
+Disallow: /twitter
+Disallow: /google
+Disallow: /facebook
+Disallow: /claim
+Sitemap: http://mastercoin-faucet.com/sitemap.xml

@@ -67,6 +67,12 @@ function hasValidReferrer($referrer)
   return $isValid;
 }
 
+// Returns true, if session is valid
+function hasValidUid()
+{
+  return isset($_SESSION["state"]) && isUid($_SESSION["state"]);
+}
+
 // Returns true, if session is valid for POST
 function hasValidPostUid()
 {
@@ -141,28 +147,30 @@ function decryptMessage($encrypted, $key)
 
 function storeCookie($input)
 {
-  $encrypted = "mf".encryptMessage($input, $key);
-  setcookie("MSSEC", $encrypted, strtotime( '+1 year' ), "/", 
+  global $key;
+  $encrypted = "msf".encryptMessage($input, $key);
+  setcookie("MSFSEC", $encrypted, strtotime( '+1 year' ), "/", 
   "mastercoin-faucet.com", false, true);
 }
 
 function cookieExists()
 {
-  if(isset($_COOKIE["MSSEC"]))
+  if(isset($_COOKIE["MSFSEC"]))
   {
-    return (strpos($_COOKIE["MSSEC"], "mf") === 0);
+    return (strpos($_COOKIE["MSFSEC"], "msf") === 0);
   }
   return false;
 }
 
 function retrieveCookie()
 {
-  if(isset($_COOKIE["MSSEC"]))
+  global $key;
+  if(isset($_COOKIE["MSFSEC"]))
   {
-    $encrypted = $_COOKIE["MSSEC"];
-    if(strpos($encrypted, "mf") === 0)
+    $encrypted = $_COOKIE["MSFSEC"];
+    if(strpos($encrypted, "msf") === 0)
     {
-      $encrypted = substr($encrypted, 2);
+      $encrypted = substr($encrypted, 3);
     }
     return decryptMessage($encrypted, $key);
   }

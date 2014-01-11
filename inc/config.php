@@ -16,6 +16,10 @@ $gitClientId = "";
 $gitClientSecret = "";
 $gitRedirectUrl = "";
 
+$twitterClientId = "";
+$twitterClientSecret = "";
+$twitterRedirectUrl = "";
+
 $sqlHost = "";
 $sqlUsername = "";
 $sqlPassword = "";
@@ -28,6 +32,7 @@ $rpcPassword = "";
 
 $checkCookie = true;
 $checkHost = true;
+$checkQualification = true;
 $checkAuthMethod = true;
 $checkAddress = true;
 

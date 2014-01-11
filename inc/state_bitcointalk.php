@@ -6,6 +6,7 @@ require_once("inc/validator.php");
 require_once("inc/verifymessage.php");
 require_once("inc/BitcoinTalkConnector.php");
 require_once("inc/RewardManager.php");
+require_once("inc/Debug.php");
 
 $referrer = "bitcointalk";
 $validsession = isValidPostSession($referrer);
@@ -14,9 +15,12 @@ $validrequest = isValidPostRequest($referrer);
 // Cleanup session
 unregisterReferrer();
 unregisterUid();
-      
+
 // Results: valid, invalidsignature, notqualified, alreadyclaimed, sessionerror, error
 $result = "STATE_ERROR";
+
+// Temp storage for debug args
+$debugtmp = "";
 
 // Session id and referrer valid?
 if($validsession)
@@ -26,7 +30,10 @@ if($validsession)
   {
     $profil = $_POST["profil"];
     $signature = $_POST["signature"];
-    
+        
+    // Debug info
+    $debugtmp .= ", PROFIL: ".$profil.", SIGNATURE: ".$signature;
+  
     $connector = new BitcoinTalkConnector();
     $user = $connector->getUserDetails($profil);
     
@@ -41,6 +48,10 @@ if($validsession)
       $address = $user["address"];
       $message = "Mastercoin faucet";
       
+      // Debug info
+      $debugtmp .= ", ID: ".$identifier.", USERNAME: ".$username.", ADDRESS: ".$address.", POSTS: "
+                .$posts.", ACTIVITY: ".$activity.", REGISTRATION: ".$registration;
+      
       try
       {
         $validsignature = isMessageSignatureValid($address, $signature, $message);
@@ -52,33 +63,63 @@ if($validsession)
       
       // Signature valid?
       if($validsignature)
-      {
+      {      
         // Is user qualified for a reward?
-        if(isQualifiedBitcointalk($user))
+        if($checkQualification == false || isQualifiedBitcointalk($user))
         {
-          $rewardmanager = new RewardManager();
-          $reward = $rewardmanager->lookupRewardByUser($identifier, $referrer);
-          
-          // User already rewarded or authentication method check disabled?
-          if($reward == null || $checkAuthMethod == false)
-          {
-            $formid = generateUid();
-            $registred = $rewardmanager->registerRequest($formid, $identifier, $referrer, $username);
-
-            // Last query successful and claim registred?
-            if($registred)
+          // Check, if Cookie check is enabled
+          if($checkCookie == false || cookieExists() == false)
+          {      
+            $rewardmanager = new RewardManager();
+            
+            // Check IP
+            if($checkHost == false || ($reward = $rewardmanager->getRewardByIp()) == null)
             {
-              // Register new session id
-              registerUid($formid);
+              // Check user id and authentication method
+              if($checkAuthMethod == false
+                  || ($reward = $rewardmanager->lookupRewardByUser($identifier, $referrer)) == null)
+              {          
+                $formid = generateUid();
+                $registred = $rewardmanager->registerRequest($formid, $identifier, $referrer, $username);
+                
+                // Last query successful and claim registred?
+                if($registred)
+                {
+                  // Register new session id
+                  registerUid($formid);          
+                  $result = "STATE_VALID";
+                }
+                
+                // Debug info
+                $debugtmp .= ", FORMID: ".$formid;       
+              }
+              else
+              {          
+                $txid = $reward->txid;
+
+                // Debug info
+                $debugtmp .= ", REQUESTID: ".$reward->requestid.", TXID VIA REWARD: ".$txid;
+                
+                $result = "STATE_ALREADY_CLAIMED";         
+              }
+            }
+            else
+            {
+              $txid = $reward->txid;
+
+              // Debug info
+              $debugtmp .= ", REQUESTID: ".$reward->requestid.", TXID VIA IP: ".$txid;
               
-              $result = "STATE_VALID";
+              $result = "STATE_ALREADY_CLAIMED";
             }
           }
           else
           {
-            $txtimestamp = date("F j, Y", strtotime($reward->timestamp));
-            $txid = $reward->txid;
+            $txid = retrieveCookie();
             
+            // Debug info
+            $debugtmp .= ", TXID VIA COOKIE: ".$txid;
+              
             $result = "STATE_ALREADY_CLAIMED";
           }
         }
@@ -97,6 +138,11 @@ if($validsession)
 else
 {
   $result = "STATE_SESSION_ERROR";
+}
+
+if($result != "STATE_VALID")
+{
+  Debug::Log("state_bitcointalk.php, STATE: ".$result.$debugtmp);
 }
 
 ?>

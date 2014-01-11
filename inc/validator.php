@@ -38,8 +38,9 @@ function isQualifiedReddit($user)
   return $karma > 100;
 }
 
-// Returns true, if user is stared on one of the Mastercoin GitHub repositories or
-// has least 3 public repositories and an account older than August 1, 2013
+// Returns true, if user is listed as creator of one of the Mastercoin GitHub 
+// repositories or has least 3 public repositories and an account older than 
+// August 1, 2013
 function isQualifiedGitHub($user, $repos)
 {
   if(!$user["public_repos"] || !$user["created_at"])
@@ -49,10 +50,12 @@ function isQualifiedGitHub($user, $repos)
 
   $date_cutoff = strtotime("2013-08-01 00:00:00");
   
-  $specials = array("pymastercoin", "mastercoin-ruby", "mastercoin-explorer",
-                    "mastercoin-wallet", "mastercoin-tools", "masterchest-library",
-                    "masterchest-wallet", "masterchest-engine", "masterchest.info",
-                    "BMX-2", "MasterCoin-Adviser");
+  $specials = array(
+      "mastercoin-wallet", "masterchest-wallet", "mastercoin-explorer",
+      "pymastercoin", "mastercoin-ruby", "mastercoin-tools", 
+      "masterchest-library", "masterchest-engine", "masterchest.info", 
+      "BMX-2", "MasterCoin-Adviser", "mastercoin-blockchain-wallet", 
+      "mastercoin-source", "mastercoin-faucet", "spec", "mastercoin-ticker");
   
   foreach($repos as $repo)
   {
